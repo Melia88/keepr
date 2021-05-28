@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using keeprserver.server.Models;
 using keeprserver.server.Repositories;
 
 namespace keeprserver.server.Services
@@ -9,6 +11,11 @@ namespace keeprserver.server.Services
     public VaultKeepsService(VaultKeepsRepository repo)
     {
       _repo = repo;
+    }
+
+    public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId)
+    {
+      return _repo.GetKeepsByVaultId(vaultId);
     }
   }
 }

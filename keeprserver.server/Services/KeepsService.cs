@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using keeprserver.server.Models;
 using keeprserver.server.Repositories;
 
 namespace keeprserver.server.Services
@@ -11,6 +14,25 @@ namespace keeprserver.server.Services
       _repo = repo;
     }
 
+
     // GetProfilesKeeps
+    // This is coming from profiles controller
+    internal List<VaultKeepsViewModel> GetProfilesKeeps(int id)
+    {
+      throw new NotImplementedException();
+    }
+
+
+    // CreateKeep
+
+
+    // GetKeepById
+
+
+    // UpdateKeep
+
+
+    // RemoveKeep
+
   }
 }
