@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -16,9 +17,31 @@ namespace keeprserver.server.Repositories
     }
 
 
-    // Get
+    // Get all keeps that belong to one vault
 
     internal List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId)
+    {
+      string sql = @"
+      SELECT
+        k.*,
+        v.id as vaultId,
+        p.id as = creatorId,
+        p.name as = creatorsName,
+        vk.Id as vaultKeepsId,
+        vk.vaultId as vaultId,
+        vk.keepsId as keepsId
+      FROM
+        vault_keeps vk
+      JOIN vaults v ON v.id = vk.vaultId
+      JOIN keeps k ON k.id = vk.keepsId
+      JOIN profiles p ON p.id = vk.profilesId
+      WHERE
+        vk.vaultId = @id;";
+      return _db.Query<VaultKeepsViewModel>(sql, new { vaultId }).ToList();
+    }
+
+
+    internal List<VaultKeepsViewModel> GetProfilesKeeps(int vaultId)
     {
       string sql = @"
       SELECT
@@ -34,7 +57,7 @@ namespace keeprserver.server.Repositories
       JOIN vaults v ON v.id = vk.vaultId
       JOIN keeps k ON k.id = vk.keepsId
       WHERE
-        vk.vaultId = @id;";
+        vk.creatorId = @id;";
       return _db.Query<VaultKeepsViewModel>(sql, new { vaultId }).ToList();
     }
   }
