@@ -26,6 +26,10 @@ namespace keeprserver.server.Services
 
     //TODO GetProfilesVaults
     // This is coming from profiles controller
+    public List<Vault> GetProfilesVaults(int vaultId)
+    {
+      return _repo.GetProfilesVaults(vaultId);
+    }
 
     // GetVaultById
     internal Vault GetVaultById(int id)
@@ -57,11 +61,6 @@ namespace keeprserver.server.Services
         return original;
       }
       throw new Exception("Something went wrong??");
-    }
-
-    internal List<VaultKeepsViewModel> GetProfilesVaults(int id)
-    {
-      throw new NotImplementedException();
     }
 
     // RemoveVault

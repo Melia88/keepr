@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace keeprserver.server.Controllers
 {
   [ApiController]
-  [Route("api/[controller]")]
+  [Route("[controller]")]
   public class AccountController : ControllerBase
   {
 

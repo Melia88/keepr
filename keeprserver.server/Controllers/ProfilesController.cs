@@ -41,11 +41,11 @@ namespace keeprserver.server.Controllers
     // GetProfilesVaults
     // Send to Vaults Service
     [HttpGet("{id}/vaults")]
-    public ActionResult<List<VaultKeepsViewModel>> GetProfilesVaults(int id)
+    public ActionResult<List<Vault>> GetProfilesVaults(int id)
     {
       try
       {
-        List<VaultKeepsViewModel> products = _vService.GetProfilesVaults(id);
+        List<Vault> products = _vService.GetProfilesVaults(id);
         return Ok(products);
       }
       catch (System.Exception e)

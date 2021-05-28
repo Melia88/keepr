@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using Dapper;
 using keeprserver.server.Models;
 
 namespace keeprserver.server.Repositories
@@ -34,7 +37,24 @@ namespace keeprserver.server.Repositories
     }
 
     // GetProfilesVaults
-
+    // Get all vaults that belong to one profile
+    internal List<Vault> GetProfilesVaults(int vaultId)
+    {
+      string sql = @"
+      SELECT
+        v.*,
+        v.name as vaultName,
+        v.description as vaultsDescription,
+        v.creatorId as creatorId,
+        p.*
+      FROM
+        vaults v
+      JOIN vaults v ON v.id = vk.vaultId
+      JOIN profiles p ON p.id = vk.creatorId
+      WHERE
+        vk.creatorId = @id;";
+      return _db.Query<Vault>(sql, new { vaultId }).ToList();
+    }
 
 
     // CreateVault

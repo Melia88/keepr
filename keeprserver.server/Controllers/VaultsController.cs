@@ -25,7 +25,6 @@ namespace keeprserver.server.Controllers
 
 
     // CreateVault
-    // [HttpPost("{id}")]
     [HttpPost]
     [Authorize]
     public async Task<ActionResult<Vault>> Create([FromBody] Vault vault)
@@ -47,7 +46,6 @@ namespace keeprserver.server.Controllers
       }
     }
     // GetVaultById
-    // [HttpGet("{id}")]
     [HttpGet("{id}")]
     public ActionResult<Vault> Get(int id)
     {
@@ -79,7 +77,6 @@ namespace keeprserver.server.Controllers
 
 
     // UpdateVault
-    // [HttpPut("{id}")]
 
     [Authorize]
     [HttpPut("{id}")]
@@ -104,7 +101,6 @@ namespace keeprserver.server.Controllers
     }
 
     // RemoveVault
-    // [HttpDelete("{id}")]
 
     [Authorize]
     [HttpDelete("{id}")]

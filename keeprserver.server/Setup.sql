@@ -41,3 +41,17 @@ CREATE TABLE IF NOT EXISTS vault_keeps(
   FOREIGN KEY (keepsId) REFERENCES keeps(id) ON DELETE CASCADE
 );
 -- The profiles table takes the place of accuonts but is the same thing
+SELECT
+  k.*,
+  v.name as vaultName,
+  v.description as vaultsDescription,
+  v.creatorId as creatorId,
+  vk.Id as vaultKeepsId,
+  vk.vaultId as vaultId,
+  vk.keepsId as keepsId
+FROM
+  vault_keeps vk
+  JOIN vaults v ON v.id = vk.vaultId
+  JOIN keeps k ON k.id = vk.keepsId
+WHERE
+  vk.vaultId = @id;
