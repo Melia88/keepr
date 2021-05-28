@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using keeprserver.server.Repositories;
+using keeprserver.server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,13 +44,15 @@ namespace keeprserver.server
       services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
       // REPOS
-      //   services.AddScoped<AccountsRepository>();
-      //   services.AddTransient<RestaurantsRepository>();
-      //   services.AddTransient<ReviewsRepository>();
+      services.AddScoped<ProfilesRepository>();
+      services.AddTransient<VaultsRepository>();
+      services.AddTransient<KeepsRepository>();
+      services.AddTransient<VaultKeepsRepository>();
       // Business Logic
-      //   services.AddScoped<AccountService>();
-      //   services.AddTransient<RestaurantsService>();
-      //   services.AddTransient<ReviewsService>();
+      services.AddScoped<ProfilesService>();
+      services.AddTransient<VaultsService>();
+      services.AddTransient<KeepsService>();
+      services.AddTransient<VaultKeepsService>();
     }
     //NOTE I added for Final/Auth
     private void ConfigureCors(IServiceCollection services)
