@@ -15,7 +15,7 @@ namespace keeprserver.server.Services
     }
 
 
-    // GetProfilesKeeps
+    // GetProfilesKeeps getting the keeps by the profiles ID
     // This is coming from profiles controller
     internal IEnumerable<Keep> GetProfilesKeeps(string id)
     {

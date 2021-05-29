@@ -14,13 +14,16 @@ namespace keeprserver.server.Controllers
   public class VaultsController : ControllerBase
   {
     public readonly VaultsService _vService;
+    public readonly KeepsService _kService;
     public readonly VaultKeepsService _vkService;
 
-    public VaultsController(VaultsService vService, VaultKeepsService vkService)
+    public VaultsController(VaultsService vService, KeepsService kService, VaultKeepsService vkService)
     {
       _vService = vService;
+      _kService = kService;
       _vkService = vkService;
     }
+
 
 
 
@@ -45,13 +48,31 @@ namespace keeprserver.server.Controllers
         return BadRequest(e.Message);
       }
     }
-    // GetVaultById
-    [HttpGet("{id}")]
-    public ActionResult<Vault> Get(int id)
+    // GetAll
+    [HttpGet]
+    public ActionResult<List<Vault>> GetAll()
     {
       try
       {
-        Vault vault = _vService.GetVaultById(id);
+        List<Vault> vaults = _vService.GetAll();
+        return Ok(vaults);
+      }
+      catch (System.Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
+
+    // GetVaultById
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Vault>> GetVaultById(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        var userId = userInfo.Id;
+        Vault vault = _vService.GetVaultById(id, userId);
         return Ok(vault);
       }
       catch (System.Exception e)
@@ -62,11 +83,13 @@ namespace keeprserver.server.Controllers
 
     // GetKeepsByVaultId
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<VaultKeepsViewModel>> GetKeepsByVaultId(int id)
+    public async Task<ActionResult<List<VaultKeepsViewModel>>> GetKeepsByVaultId(int id)
     {
       try
       {
-        List<VaultKeepsViewModel> keeps = _vkService.GetKeepsByVaultId(id);
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        var userId = userInfo.Id;
+        IEnumerable<VaultKeepsViewModel> keeps = _vService.GetKeepsByVaultId(id, userId);
         return Ok(keeps);
       }
       catch (System.Exception e)
@@ -88,7 +111,9 @@ namespace keeprserver.server.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         // REVIEW DO NOT TRUST THE CLIENT..... EVER
         vault.Id = id;
-        Vault newVault = _vService.Update(vault, userInfo.Id);
+        vault.Creator = userInfo;
+        vault.CreatorId = userInfo.Id;
+        Vault newVault = _vService.Update(vault);
         // REVIEW cool inheritance thing account : profile
         newVault.Creator = userInfo;
         return Ok(newVault);

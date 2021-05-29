@@ -15,11 +15,7 @@ namespace keeprserver.server.Repositories
     {
       _db = db;
     }
-    // RemoveVault
-    internal void Remove(int id)
-    {
-      throw new NotImplementedException();
-    }
+
     // CreateVault
     internal Vault Create(Vault newVault)
     {
@@ -35,12 +31,49 @@ namespace keeprserver.server.Repositories
     // GetVaultById
     internal Vault GetVaultById(int id)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT 
+        v.*,
+        p.*
+      From vaults v
+      JOIN profiles p ON p.id = v.creatorId
+      WHERE v.id = @id;
+      ";
+      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
+      {
+        v.Creator = p;
+        return v;
+      }, new { id }).FirstOrDefault();
     }
-    // UpdateVault
+
+    internal List<Vault> GetAll()
+    {
+      string sql = @"
+      SELECT 
+        v.*,
+        p.*
+      FROM vaults v
+      JOIN profiles p ON p.id = v.creatorId;  
+      ";
+      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
+      {
+        v.Creator = p;
+        return v;
+      }).ToList();
+    }
+
+    //TODO UpdateVault
     internal bool Update(Vault original)
     {
-      throw new NotImplementedException();
+      string sql = @"
+            UPDATE vaults 
+            SET 
+                name = @Name,
+                description = @Description
+            WHERE id = @Id;
+            ";
+      int affectedRows = _db.Execute(sql, original);
+      return affectedRows == 1;
     }
 
     // GetProfilesVaults
@@ -54,8 +87,7 @@ namespace keeprserver.server.Repositories
         v.description as vaultsDescription,
         v.creatorId as creatorId,
         p.*
-      FROM
-        vaults v
+      FROM vaults v
       JOIN profiles p ON p.id = v.creatorId
       WHERE
         v.creatorId = @id;";
@@ -65,6 +97,15 @@ namespace keeprserver.server.Repositories
         return v;
       }, new { id });
     }
+
+    // RemoveVault
+    internal void Remove(int id)
+    {
+      string sql = @"
+      DELETE FROM vaults WHERE id = @id LIMIT 1;";
+      _db.Execute(sql, new { id });
+    }
+
     // return _db.Query<Vault, Profile, Vault>(sql, new { vaultId }).ToList();
     // {
     //   v.Creator = p;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,8 +22,6 @@ namespace keeprserver.server.Repositories
       string sql = @"
       SELECT
         k.*,
-        k.name as keepName,
-        k.creatorId as creatorId,
         p.*
       FROM
         keeps k
@@ -37,28 +36,50 @@ namespace keeprserver.server.Repositories
     }
 
     //TODO CreateKeep
+    internal Keep Create(Keep newKeep)
+    {
+      string sql = @"
+                INSERT INTO 
+                keeps(creatorId, name, description, img, views, shares, keeps)
+                VALUES (@CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
+                SELECT LAST_INSERT_ID();
+            ";
+      newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
+      return newKeep;
+    }
+    // -------------------------------------------------------
     // internal Keep Create(Keep newKeep)
     // {
     //   string sql = @"
     //             INSERT INTO 
-    //             keeps(creatorId, name, description, img, views, shares, keeps)
+    //             vaults(creatorId, name, description, img, views, shares, keeps)
     //             VALUES (@CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
     //             SELECT LAST_INSERT_ID();
     //         ";
     //   newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
     //   return newKeep;
     // }
-    // -------------------------------------------------------
-    internal Keep Create(Keep newKeep)
+
+    internal IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int id)
     {
       string sql = @"
-                INSERT INTO 
-                vaults(creatorId, name, description, img, views, shares, keeps)
-                VALUES (@CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
-                SELECT LAST_INSERT_ID();
-            ";
-      newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
-      return newKeep;
+      SELECT 
+      k.*
+      p.*,
+      p.id as profileId,
+      p.name as creatorName,
+      vk.*
+      FROM vaultKeeps vk
+      JOIN keeps k ON k.id = vk.keepsId
+      JOIN profiles p ON p.id = k.creatorId
+      WHERE
+      vk.vaultId =@id;
+      ";
+      return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (k, p) =>
+      {
+        k.Creator = p;
+        return k;
+      }, new { id });
     }
 
     // -------------------------------------------------------
