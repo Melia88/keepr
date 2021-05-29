@@ -24,12 +24,11 @@ namespace keeprserver.server.Repositories
       string sql = @"
       SELECT
         k.*,
-        v.id as vaultId,
-        p.id as = creatorId,
-        p.name as = creatorsName,
-        vk.Id as vaultKeepsId,
+        v.name as vaultName,
+        vk.id as vaultKeepsId,
         vk.vaultId as vaultId,
         vk.keepsId as keepsId
+        vk.creatorId as creatorId
       FROM
         vault_keeps vk
       JOIN vaults v ON v.id = vk.vaultId

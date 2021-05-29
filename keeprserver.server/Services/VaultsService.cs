@@ -31,8 +31,12 @@ namespace keeprserver.server.Services
 
     //TODO GetProfilesVaults
     // This is coming from profiles controller
-    public IEnumerable<Vault> GetProfilesVaults(string id)
+    public IEnumerable<Vault> GetProfilesVaults(string id, string userId)
     {
+      if (id == userId)
+      {
+        return _repo.GetProfilesVaults(userId);
+      }
       return _repo.GetProfilesVaults(id);
     }
     // GetAll
@@ -43,37 +47,37 @@ namespace keeprserver.server.Services
 
 
     // GetVaultById
-    internal Vault GetVaultById(int id)
-    {
-      Vault vault = _repo.GetVaultById(id);
-      if (vault == null)
-      {
-        throw new Exception("Invalid Vault Id");
-      }
-      else if (vault.IsPrivate == true)
-      {
-        throw new Exception("Private Vault, Only Creater Has Access!");
-      }
-      return vault;
-    }
+    // internal Vault GetVaultById(int id)
+    // {
+    //   Vault vault = _repo.GetVaultById(id);
+    //   if (vault == null)
+    //   {
+    //     throw new Exception("Invalid Vault Id");
+    //   }
+    //   else if (vault.IsPrivate == true)
+    //   {
+    //     throw new Exception("Private Vault, Only Creater Has Access!");
+    //   }
+    //   return vault;
+    // }
 
     // GetVaultById security check
-    internal Vault GetVaultById(int id, string userId)
+    public Vault GetVaultById(int id)
     {
       Vault vault = _repo.GetVaultById(id);
       if (vault == null)
       {
         throw new Exception("Invalid Vault Id");
       }
-      else if (vault.IsPrivate == true && vault.CreatorId != userId)
-      {
-        throw new Exception("Not Yours!");
-      }
+      // else if (vault.IsPrivate == true && vault.CreatorId != userId)
+      // {
+      //   throw new Exception("Private Vault, Only Creater Has Access!");
+      // }
       return vault;
     }
 
     // UpdateVault
-    // internal Vault Update(Vault update)
+    // internal Vault Update(Vault update, string userId)
     // {
     //   // first we get the vault
     //   Vault original =  _vrepo.GetVaultById(update.Id);
@@ -92,7 +96,7 @@ namespace keeprserver.server.Services
     //   }
     //   throw new Exception("Something went wrong??");
     // }
-    internal Vault Update(Vault update)
+    internal Vault Update(Vault update, string id)
     {
       // first we get the vault
       Vault vault = _vrepo.GetVaultById(update.Id);
@@ -105,6 +109,9 @@ namespace keeprserver.server.Services
       {
         throw new Exception("You cant do that!");
       }
+      vault.Name = update.Name.Length > 0 ? update.Name : vault.Name;
+      vault.Description = update.Description != null ? update.Description : vault.Description;
+      vault.IsPrivate = update.IsPrivate != update.IsPrivate ? update.IsPrivate : vault.IsPrivate;
       return _repo.Update(vault);
 
       throw new Exception("Something went wrong??");

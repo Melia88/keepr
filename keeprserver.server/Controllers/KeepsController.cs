@@ -97,12 +97,12 @@ namespace keeprserver.server.Controllers
 
     // GetKeepById
     [HttpGet("{id}")]
-    public async Task<ActionResult<Keep>> GetKeepById(int id)
+    public ActionResult<Keep> GetKeepById(int id)
     {
       try
       {
-        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        var userId = userInfo.Id;
+        // Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        // var userId = userInfo.Id;
         Keep keep = _kService.GetKeepById(id);
         return Ok(keep);
       }
@@ -124,7 +124,7 @@ namespace keeprserver.server.Controllers
         keep.Id = id;
         // vault.Creator = userInfo;
         keep.CreatorId = userInfo.Id;
-        Keep newKeep = _kService.Update(keep);
+        Keep newKeep = _kService.Update(keep, userInfo.Id);
         newKeep.Creator = userInfo;
         return Ok(newKeep);
 

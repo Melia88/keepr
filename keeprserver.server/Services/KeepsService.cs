@@ -17,12 +17,12 @@ namespace keeprserver.server.Services
 
     // GetProfilesKeeps getting the keeps by the profiles ID
     // This is coming from profiles controller
-    internal IEnumerable<Keep> GetProfilesKeeps(string id)
+    public List<Keep> GetProfilesKeeps(string id)
     {
       return _repo.GetProfilesKeeps(id);
     }
     // CreateKeep
-    internal Keep Create(Keep newKeep)
+    public Keep Create(Keep newKeep)
     {
 
       return _repo.Create(newKeep);
@@ -52,7 +52,7 @@ namespace keeprserver.server.Services
 
 
     // UpdateKeep
-    internal Keep Update(Keep update)
+    internal Keep Update(Keep update, string id)
     {
       // first we get the keep
       Keep keep = _repo.GetKeepById(update.Id);
@@ -65,9 +65,15 @@ namespace keeprserver.server.Services
       {
         throw new Exception("You cant do that!");
       }
+      keep.Name = update.Name.Length > 0 ? update.Name : keep.Name;
+      keep.Description = update.Description != null ? update.Description : keep.Description;
+      keep.Img = update.Img != null ? update.Img : keep.Img;
+      keep.Views = update.Views > 0 ? update.Views : keep.Views;
+      keep.Shares = update.Shares > 0 ? update.Shares : keep.Shares;
+      keep.Keeps = update.Keeps > 0 ? update.Keeps : keep.Keeps;
       return _repo.Update(keep);
 
-      throw new Exception("Something went wrong??");
+
     }
 
     // RemoveKeep

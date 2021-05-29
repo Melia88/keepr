@@ -17,7 +17,7 @@ namespace keeprserver.server.Repositories
     }
 
     // GetProfilesKeeps
-    internal IEnumerable<Keep> GetProfilesKeeps(string id)
+    public List<Keep> GetProfilesKeeps(string id)
     {
       string sql = @"
       SELECT
@@ -32,23 +32,23 @@ namespace keeprserver.server.Repositories
       {
         k.Creator = p;
         return k;
-      }, new { id });
+      }, new { id }).ToList();
     }
 
     //TODO CreateKeep
-    internal Keep Create(Keep newKeep)
+    public Keep Create(Keep newKeep)
     {
       string sql = @"
                 INSERT INTO 
-                keeps(creatorId, name, description, img, views, shares, keeps)
-                VALUES (@CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
+                keeps(creatorId, name, description, img)
+                VALUES (@CreatorId, @Name, @Description, @Img);
                 SELECT LAST_INSERT_ID();
             ";
       newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
       return newKeep;
     }
     // -------------------------------------------------------
-    // internal Keep Create(Keep newKeep)
+    // public Keep Create(Keep newKeep)
     // {
     //   string sql = @"
     //             INSERT INTO 
@@ -60,7 +60,7 @@ namespace keeprserver.server.Repositories
     //   return newKeep;
     // }
 
-    internal List<Keep> GetAll()
+    public List<Keep> GetAll()
     {
       string sql = @"
       SELECT 
@@ -73,36 +73,36 @@ namespace keeprserver.server.Repositories
       {
         k.Creator = p;
         return k;
-      }).ToList();
+      }, splitOn: "id").ToList();
     }
 
-    internal IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int id)
-    {
-      string sql = @"
-      SELECT 
-      k.*
-      p.*,
-      p.id as profileId,
-      p.name as creatorName,
-      vk.*
-      FROM vaultKeeps vk
-      JOIN keeps k ON k.id = vk.keepsId
-      JOIN profiles p ON p.id = k.creatorId
-      WHERE
-      vk.vaultId =@id;
-      ";
-      return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (k, p) =>
-      {
-        k.Creator = p;
-        return k;
-      }, new { id });
-    }
+    // public IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int id)
+    // {
+    //   string sql = @"
+    //   SELECT 
+    //   k.*
+    //   p.*,
+    //   p.id as profileId,
+    //   p.name as creatorName,
+    //   vk.*
+    //   FROM vaultKeeps vk
+    //   JOIN keeps k ON k.id = vk.keepsId
+    //   JOIN profiles p ON p.id = k.creatorId
+    //   WHERE
+    //   vk.vaultId =@id;
+    //   ";
+    //   return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (k, p) =>
+    //   {
+    //     k.Creator = p;
+    //     return k;
+    //   }, new { id });
+    // }
 
     // -------------------------------------------------------
 
 
     //TODO GetKeepById
-    internal Keep GetKeepById(int id)
+    public Keep GetKeepById(int id)
     {
       string sql = @"
       SELECT 
@@ -120,12 +120,12 @@ namespace keeprserver.server.Repositories
     }
 
     //TODO UpdateKeep
-    internal Keep Update(Keep original)
+    public Keep Update(Keep original)
     {
       string sql = @"
             UPDATE keeps 
             SET 
-                creatorId = @CreatorId
+                creatorId = @CreatorId,
                 name = @Name,
                 description = @Description,
                 img = @Img,
@@ -139,10 +139,10 @@ namespace keeprserver.server.Repositories
     }
 
     //TODO RemoveKeep
-    internal void Remove(int id)
+    public void Remove(int id)
     {
       string sql = @"
-      DELETE FROM keepss WHERE id = @id LIMIT 1;";
+      DELETE FROM keeps WHERE id = @id LIMIT 1;";
       _db.Execute(sql, new { id });
     }
   }

@@ -37,13 +37,14 @@ namespace keeprserver.server.Repositories
         p.*
       From vaults v
       JOIN profiles p ON p.id = v.creatorId
-      WHERE v.id = @id;
-      ";
-      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
-      {
-        v.Creator = p;
-        return v;
-      }, new { id }).FirstOrDefault();
+      WHERE v.id = @id";
+      return _db.QueryFirstOrDefault<Vault>(sql, new { id });
+
+      // return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
+      // {
+      //   v.Creator = p;
+      //   return v;
+      // }, new { id }).FirstOrDefault();
     }
 
     internal List<Vault> GetAll()

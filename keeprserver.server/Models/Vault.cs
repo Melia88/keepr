@@ -9,16 +9,15 @@ namespace keeprserver.server.Models
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    [Required]
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
     [Required]
-    [MaxLength(1)]
+    [MinLength(1)]
 
-    public string Name { get; set; }
+    public string Name { get; set; } = "Name Here";
 
     public string Description { get; set; } = "No Description";
 
-    public bool IsPrivate { get; set; }
+    public bool IsPrivate { get; set; } = false;
   }
 }

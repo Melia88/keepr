@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
@@ -74,7 +75,11 @@ namespace keeprserver.server.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         var userId = userInfo.Id;
-        Vault vault = _vService.GetVaultById(id, userId);
+        Vault vault = _vService.GetVaultById(id);
+        if (vault.IsPrivate == true && vault.CreatorId != userId)
+        {
+          throw new Exception("Private Vault, Only Creater Has Access!");
+        }
         return Ok(vault);
       }
       catch (System.Exception e)
@@ -128,7 +133,7 @@ namespace keeprserver.server.Controllers
         vault.Id = id;
         // vault.Creator = userInfo;
         vault.CreatorId = userInfo.Id;
-        Vault newVault = _vService.Update(vault);
+        Vault newVault = _vService.Update(vault, userInfo.Id);
         // REVIEW cool inheritance thing account : profile
         newVault.Creator = userInfo;
         return Ok(newVault);

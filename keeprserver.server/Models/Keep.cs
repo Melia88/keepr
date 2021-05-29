@@ -5,7 +5,7 @@ namespace keeprserver.server.Models
 {
   public class Keep
   {
-    [Required]
+    // [Required]
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
