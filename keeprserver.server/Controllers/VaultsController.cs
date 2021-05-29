@@ -111,7 +111,7 @@ namespace keeprserver.server.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         // REVIEW DO NOT TRUST THE CLIENT..... EVER
         vault.Id = id;
-        vault.Creator = userInfo;
+        // vault.Creator = userInfo;
         vault.CreatorId = userInfo.Id;
         Vault newVault = _vService.Update(vault);
         // REVIEW cool inheritance thing account : profile
