@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using keeprserver.server.Models;
 using keeprserver.server.Repositories;
@@ -24,6 +25,15 @@ namespace keeprserver.server.Services
     }
 
     // Delete
+    public void Remove(int id, string userId)
+    {
+      VaultKeeps vk = Get
+      if ( .CreatorId != userId)
+      {
+        throw new Exception("Cannot Delete");
+      }
+      return _repo.Remove();
+    }
 
 
 
