@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keeprserver.server.Models;
@@ -77,13 +78,79 @@ namespace keeprserver.server.Controllers
     // -------------------------------------------------------
 
 
+
+    // GetAll
+    [HttpGet]
+    public ActionResult<List<Keep>> GetAll()
+    {
+      try
+      {
+        List<Keep> keeps = _kService.GetAll();
+        return Ok(keeps);
+      }
+      catch (System.Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
+
     // GetKeepById
-    // [HttpGet("{id}")]
-
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Keep>> GetKeepById(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        var userId = userInfo.Id;
+        Keep keep = _kService.GetKeepById(id);
+        return Ok(keep);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     // UpdateKeep
-    // [HttpPut("{id}")]
 
+    [HttpPut("{id}")]
+    [Authorize]
+    public async Task<ActionResult<Keep>> Edit(int id, [FromBody] Keep keep)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        // REVIEW DO NOT TRUST THE CLIENT..... EVER
+        keep.Id = id;
+        // vault.Creator = userInfo;
+        keep.CreatorId = userInfo.Id;
+        Keep newKeep = _kService.Update(keep);
+        newKeep.Creator = userInfo;
+        return Ok(newKeep);
+
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     // RemoveKeep
-    // [HttpDelete("{id}")]
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<ActionResult<string>> Remove(int id)
+    {
+      try
+      {
+        // REVIEW DO NOT TRUST THE CLIENT..... EVER
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        _kService.Remove(id, userInfo.Id);
+        return Ok("Successfully Removed");
+
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using keeprserver.server.Models;
 using keeprserver.server.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,7 @@ namespace keeprserver.server.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
-  public class VaultKeepsController
+  public class VaultKeepsController : ControllerBase
   {
     private readonly VaultKeepsService _vkService;
 
@@ -17,9 +18,19 @@ namespace keeprserver.server.Controllers
 
 
     // Create
-
-    // GetKeepsByVaultId
-    // [HttpGet("{id}/keeps)]
+    [HttpPost]
+    public ActionResult<VaultKeeps> CreateVaultKeeps([FromBody] VaultKeeps vk)
+    {
+      try
+      {
+        VaultKeeps newVK = _vkService.CreateVaultKeeps(vk);
+        return Ok(newVK);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
 
     // Delete

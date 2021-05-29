@@ -48,6 +48,8 @@ namespace keeprserver.server.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    // -------------------------------------------------*********
     // GetAll
     [HttpGet]
     public ActionResult<List<Vault>> GetAll()
@@ -63,7 +65,7 @@ namespace keeprserver.server.Controllers
         return BadRequest(e.Message);
       }
     }
-
+    // -------------------------------------------------*********
     // GetVaultById
     [HttpGet("{id}")]
     public async Task<ActionResult<Vault>> GetVaultById(int id)
@@ -80,8 +82,21 @@ namespace keeprserver.server.Controllers
         return BadRequest(e.Message);
       }
     }
+    // [HttpGet("{id}")]
+    // public ActionResult<Vault> GetVaultById(int id)
+    // {
+    //   try
+    //   {
+    //     Vault vault = _vService.GetVaultById(id);
+    //     return Ok(vault);
+    //   }
+    //   catch (System.Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
 
-    // GetKeepsByVaultId
+    // GetKeepsByVaultId This is GET VAULTKEEPS in postman test!
     [HttpGet("{id}/keeps")]
     public async Task<ActionResult<List<VaultKeepsViewModel>>> GetKeepsByVaultId(int id)
     {
@@ -89,7 +104,7 @@ namespace keeprserver.server.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         var userId = userInfo.Id;
-        IEnumerable<VaultKeepsViewModel> keeps = _vService.GetKeepsByVaultId(id, userId);
+        IEnumerable<VaultKeepsViewModel> keeps = _vkService.GetKeepsByVaultId(id, userId);
         return Ok(keeps);
       }
       catch (System.Exception e)
@@ -104,7 +119,7 @@ namespace keeprserver.server.Controllers
     [Authorize]
     [HttpPut("{id}")]
 
-    public async Task<ActionResult<Vault>> Update(int id, [FromBody] Vault vault)
+    public async Task<ActionResult<Vault>> Edit(int id, [FromBody] Vault vault)
     {
       try
       {

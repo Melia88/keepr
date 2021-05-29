@@ -63,17 +63,21 @@ namespace keeprserver.server.Repositories
     }
 
     //TODO UpdateVault
-    internal bool Update(Vault original)
+    internal Vault Update(Vault original)
     {
       string sql = @"
             UPDATE vaults 
             SET 
+                creatorId = @CreatorId
                 name = @Name,
-                description = @Description
+                description = @Description,
+                isPrivate = @IsPrivate
             WHERE id = @Id;
             ";
-      int affectedRows = _db.Execute(sql, original);
-      return affectedRows == 1;
+      _db.Execute(sql, original);
+      return original;
+      // int affectedRows = 
+      // return affectedRows == 1;
     }
 
     // GetProfilesVaults

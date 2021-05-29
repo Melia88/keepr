@@ -39,7 +39,17 @@ namespace keeprserver.server.Repositories
         vk.vaultId = @id;";
       return _db.Query<VaultKeepsViewModel>(sql, new { vaultId }).ToList();
     }
+    public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
+    {
+      string sql = @"INSERT INTO 
+            vault_keeps(creatorId, vaultId, keepsId)
+            VALUES (@CreatorId, @VaultId, @KeepsId);
+            SELECT LAST_INSERT_ID();
+            ";
 
+      vk.Id = _db.ExecuteScalar<int>(sql, vk);
+      return vk;
+    }
 
 
   }

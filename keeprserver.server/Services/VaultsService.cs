@@ -9,14 +9,17 @@ namespace keeprserver.server.Services
   {
     private readonly VaultsRepository _repo;
     private readonly KeepsRepository _krepo;
+    private readonly VaultsRepository _vrepo;
     private readonly VaultKeepsRepository _vkrepo;
 
-    public VaultsService(VaultsRepository repo, KeepsRepository krepo, VaultKeepsRepository vkrepo)
+    public VaultsService(VaultsRepository repo, KeepsRepository krepo, VaultsRepository vrepo, VaultKeepsRepository vkrepo)
     {
       _repo = repo;
       _krepo = krepo;
+      _vrepo = vrepo;
       _vkrepo = vkrepo;
     }
+
 
     // CreateVault
     internal Vault Create(Vault newVault)
@@ -70,23 +73,40 @@ namespace keeprserver.server.Services
     }
 
     // UpdateVault
+    // internal Vault Update(Vault update)
+    // {
+    //   // first we get the vault
+    //   Vault original =  _vrepo.GetVaultById(update.Id);
+    //   // check if update.creatorId is the same as original.creator id
+    //   if (update.CreatorId != original.CreatorId)
+    //   {
+    //     throw new Exception("You cant do that!");
+    //   }
+
+    //   original.Name = update.Name.Length > 0 ? update.Name : original.Name;
+    //   original.Description = update.Description.Length > 0 ? update.Description : original.Description;
+    //   original.IsPrivate = update.IsPrivate ? update.IsPrivate : original.IsPrivate;
+    //   if (_repo.Update(original))
+    //   {
+    //     return original;
+    //   }
+    //   throw new Exception("Something went wrong??");
+    // }
     internal Vault Update(Vault update)
     {
       // first we get the vault
-      Vault original = GetVaultById(update.Id);
+      Vault vault = _vrepo.GetVaultById(update.Id);
+      if (vault == null)
+      {
+        throw new Exception("ID does not exist!");
+      }
       // check if update.creatorId is the same as original.creator id
-      if (update.CreatorId != original.CreatorId)
+      if (update.CreatorId != vault.CreatorId)
       {
         throw new Exception("You cant do that!");
       }
+      return _repo.Update(vault);
 
-      original.Name = update.Name.Length > 0 ? update.Name : original.Name;
-      original.Description = update.Description.Length > 0 ? update.Description : original.Description;
-      original.IsPrivate = update.IsPrivate ? update.IsPrivate : original.IsPrivate;
-      if (_repo.Update(original))
-      {
-        return original;
-      }
       throw new Exception("Something went wrong??");
     }
 
@@ -96,7 +116,7 @@ namespace keeprserver.server.Services
     {
       // Business Logic
       // REVIEW notice I can re-use my own coolness
-      Vault vault = GetVaultById(id);
+      Vault vault = _vrepo.GetVaultById(id);
 
       if (vault.CreatorId != userId)
       {
@@ -105,15 +125,15 @@ namespace keeprserver.server.Services
       _repo.Remove(id);
     }
     // GetKeepsByVaultId
-    public IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
-    {
-      Vault vault = _repo.GetVaultById(vaultId);
-      if (vault.CreatorId != userId)
-      {
-        throw new Exception("Not Yours!");
-      }
+    // public IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
+    // {
+    //   Vault vault = _repo.GetVaultById(vaultId);
+    //   if (vault.CreatorId != userId)
+    //   {
+    //     throw new Exception("Not Yours!");
+    //   }
 
-      return _krepo.GetKeepsByVaultId(vaultId);
-    }
+    //   return _vkrepo.GetKeepsByVaultId(vaultId);
+    // }
   }
 }

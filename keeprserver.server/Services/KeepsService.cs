@@ -21,24 +21,66 @@ namespace keeprserver.server.Services
     {
       return _repo.GetProfilesKeeps(id);
     }
-
+    // CreateKeep
     internal Keep Create(Keep newKeep)
     {
 
       return _repo.Create(newKeep);
     }
+    // ----------------------------------------------------********************
 
 
-    // CreateKeep
+
+
+    // GetAll
+    internal List<Keep> GetAll()
+    {
+      return _repo.GetAll();
+    }
 
 
     // GetKeepById
+    internal Keep GetKeepById(int id)
+    {
+      Keep keep = _repo.GetKeepById(id);
+      if (keep == null)
+      {
+        throw new Exception("Invalid Keep Id");
+      }
+      return keep;
+    }
 
 
     // UpdateKeep
+    internal Keep Update(Keep update)
+    {
+      // first we get the keep
+      Keep keep = _repo.GetKeepById(update.Id);
+      if (keep == null)
+      {
+        throw new Exception("ID does not exist!");
+      }
+      // check if update.creatorId is the same as original.creator id
+      if (update.CreatorId != keep.CreatorId)
+      {
+        throw new Exception("You cant do that!");
+      }
+      return _repo.Update(keep);
 
+      throw new Exception("Something went wrong??");
+    }
 
     // RemoveKeep
+    internal void Remove(int id, string userId)
+    {
+      // Business Logic
+      Keep keep = _repo.GetKeepById(id);
 
+      if (keep.CreatorId != userId)
+      {
+        throw new Exception("No, no, no this isn't yours!");
+      }
+      _repo.Remove(id);
+    }
   }
 }
