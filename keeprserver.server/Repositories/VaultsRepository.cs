@@ -15,22 +15,29 @@ namespace keeprserver.server.Repositories
     {
       _db = db;
     }
-
+    // RemoveVault
     internal void Remove(int id)
     {
       throw new NotImplementedException();
     }
-
-    internal Vault Create(Vault vault)
+    // CreateVault
+    internal Vault Create(Vault newVault)
     {
-      throw new NotImplementedException();
+      string sql = @"
+                INSERT INTO 
+                vaults(creatorId, name, description, isPrivate)
+                VALUES (@CreatorId, @Name, @Description, @IsPrivate);
+                SELECT LAST_INSERT_ID();
+            ";
+      newVault.Id = _db.ExecuteScalar<int>(sql, newVault);
+      return newVault;
     }
-
+    // GetVaultById
     internal Vault GetVaultById(int id)
     {
       throw new NotImplementedException();
     }
-
+    // UpdateVault
     internal bool Update(Vault original)
     {
       throw new NotImplementedException();
@@ -55,18 +62,6 @@ namespace keeprserver.server.Repositories
         vk.creatorId = @id;";
       return _db.Query<Vault>(sql, new { vaultId }).ToList();
     }
-
-
-    // CreateVault
-
-
-    // GetVaultById
-
-
-    // UpdateVault
-
-
-    // RemoveVault
 
   }
 }

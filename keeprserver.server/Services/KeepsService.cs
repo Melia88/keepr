@@ -17,9 +17,15 @@ namespace keeprserver.server.Services
 
     // GetProfilesKeeps
     // This is coming from profiles controller
-    internal List<VaultKeepsViewModel> GetProfilesKeeps(int id)
+    internal List<Keep> GetProfilesKeeps(int id)
     {
       throw new NotImplementedException();
+    }
+
+    internal Keep Create(Keep newKeep)
+    {
+
+      return _repo.Create(newKeep);
     }
 
 

@@ -57,11 +57,11 @@ namespace keeprserver.server.Controllers
     // GetProfilesKeeps
     // Send to Keeps Service
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<VaultKeepsViewModel>> GetProfilesKeeps(int id)
+    public ActionResult<List<Keep>> GetProfilesKeeps(int id)
     {
       try
       {
-        List<VaultKeepsViewModel> products = _kService.GetProfilesKeeps(id);
+        List<Keep> products = _kService.GetProfilesKeeps(id);
         return Ok(products);
       }
       catch (System.Exception e)
