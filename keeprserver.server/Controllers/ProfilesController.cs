@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using keeprserver.server.Models;
 using keeprserver.server.Services;
@@ -41,14 +42,14 @@ namespace keeprserver.server.Controllers
     // GetProfilesVaults
     // Send to Vaults Service
     [HttpGet("{id}/vaults")]
-    public ActionResult<List<Vault>> GetProfilesVaults(int id)
+    public ActionResult<List<Vault>> GetProfilesVaults(string id)
     {
       try
       {
-        List<Vault> products = _vService.GetProfilesVaults(id);
-        return Ok(products);
+        IEnumerable<Vault> vaults = _vService.GetProfilesVaults(id);
+        return Ok(vaults);
       }
-      catch (System.Exception e)
+      catch (Exception e)
       {
         return BadRequest(e.Message);
       }
@@ -57,14 +58,14 @@ namespace keeprserver.server.Controllers
     // GetProfilesKeeps
     // Send to Keeps Service
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<Keep>> GetProfilesKeeps(int id)
+    public ActionResult<List<Keep>> GetProfilesKeeps(string id)
     {
       try
       {
-        List<Keep> products = _kService.GetProfilesKeeps(id);
-        return Ok(products);
+        IEnumerable<Keep> keeps = _kService.GetProfilesKeeps(id);
+        return Ok(keeps);
       }
-      catch (System.Exception e)
+      catch (Exception e)
       {
         return BadRequest(e.Message);
       }

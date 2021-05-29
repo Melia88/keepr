@@ -24,7 +24,7 @@ namespace keeprserver.server.Repositories
       return newProfile;
     }
 
-    internal Profile GetById(string id)
+    internal Profile GetProfileById(string id)
     {
       string sql = "SELECT * FROM profiles WHERE id = @id";
       return _db.QueryFirstOrDefault<Profile>(sql, new { id });

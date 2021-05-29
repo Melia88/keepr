@@ -45,7 +45,7 @@ namespace keeprserver.server.Repositories
 
     // GetProfilesVaults
     // Get all vaults that belong to one profile
-    internal List<Vault> GetProfilesVaults(int vaultId)
+    internal IEnumerable<Vault> GetProfilesVaults(string id)
     {
       string sql = @"
       SELECT
@@ -56,12 +56,19 @@ namespace keeprserver.server.Repositories
         p.*
       FROM
         vaults v
-      JOIN vaults v ON v.id = vk.vaultId
-      JOIN profiles p ON p.id = vk.creatorId
+      JOIN profiles p ON p.id = v.creatorId
       WHERE
-        vk.creatorId = @id;";
-      return _db.Query<Vault>(sql, new { vaultId }).ToList();
+        v.creatorId = @id;";
+      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
+      {
+        v.Creator = p;
+        return v;
+      }, new { id });
     }
-
+    // return _db.Query<Vault, Profile, Vault>(sql, new { vaultId }).ToList();
+    // {
+    //   v.Creator = p;
+    //   return v;
+    // }, new { id }).FirstOrDefault();
   }
 }

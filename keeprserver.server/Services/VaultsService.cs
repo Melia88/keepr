@@ -17,18 +17,18 @@ namespace keeprserver.server.Services
     }
 
     // CreateVault
-    internal Vault Create(Vault vault)
+    internal Vault Create(Vault newVault)
     {
-      return _repo.Create(vault);
+      return _repo.Create(newVault);
     }
 
 
 
     //TODO GetProfilesVaults
     // This is coming from profiles controller
-    public List<Vault> GetProfilesVaults(int vaultId)
+    public IEnumerable<Vault> GetProfilesVaults(string id)
     {
-      return _repo.GetProfilesVaults(vaultId);
+      return _repo.GetProfilesVaults(id);
     }
 
     // GetVaultById

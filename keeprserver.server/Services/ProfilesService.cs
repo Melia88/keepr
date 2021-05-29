@@ -16,7 +16,7 @@ namespace keeprserver.server.Services
 
     internal Profile GetOrCreateProfile(Profile userInfo)
     {
-      Profile profile = _repo.GetById(userInfo.Id);
+      Profile profile = _repo.GetProfileById(userInfo.Id);
       if (profile == null)
       {
         return _repo.Create(userInfo);
@@ -26,7 +26,13 @@ namespace keeprserver.server.Services
 
     internal Profile GetProfileById(string id)
     {
-      return _repo.GetById(id);
+      Profile profile = _repo.GetProfileById(id);
+      if (profile == null)
+      {
+        throw new Exception("Profile does not exist");
+      }
+      return profile;
+
     }
 
 
