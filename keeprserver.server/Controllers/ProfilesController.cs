@@ -49,8 +49,20 @@ namespace keeprserver.server.Controllers
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        List<Vault> vaults = _vService.GetProfilesVaults(id, userInfo.Id);
-        return Ok(vaults);
+        var userId = userInfo.Id;
+        // if youre not logged in & the vault isnt set to private then show the vaults
+        Profile p = _pService.GetProfileById(id);
+        List<Vault> publicVaults = _vService.GetProfilesPublicVaults(id);
+        if (userId == p.Id)
+        {
+          List<Vault> allMyVaults = _vService.GetMyVaultsByProfileId(userId);
+          return Ok(allMyVaults);
+        }
+        if (userId != p.Id)
+        {
+          return Ok(publicVaults);
+        }
+        return Ok(publicVaults);
       }
       catch (Exception e)
       {
@@ -60,6 +72,21 @@ namespace keeprserver.server.Controllers
 
     // GetProfilesKeeps
     // Send to Keeps Service
+    // [HttpGet("{id}/keeps")]
+    // public async Task<ActionResult<List<Keep>>> GetProfilesKeeps()
+    // {
+    //   try
+    //   {
+    //     Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+    //     var userId = userInfo.Id;
+    //     List<Keep> keeps = _kService.GetProfilesKeeps(userId);
+    //     return Ok(keeps);
+    //   }
+    //   catch (Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
     [HttpGet("{id}/keeps")]
     public ActionResult<List<Keep>> GetProfilesKeeps(string id)
     {

@@ -14,18 +14,15 @@ namespace keeprserver.server.Services
       _repo = repo;
     }
 
-
     // GetProfilesKeeps getting the keeps by the profiles ID
     // This is coming from profiles controller
-    public List<Keep> GetProfilesKeeps(string id)
+    public List<Keep> GetProfilesKeeps(string userId)
     {
-      return _repo.GetProfilesKeeps(id);
+      return _repo.GetProfilesKeeps(userId);
     }
     // CreateKeep
     public Keep Create(Keep newKeep)
     {
-      // TODO B Logic so you can only create if youre logged in
-
       return _repo.Create(newKeep);
     }
     // ----------------------------------------------------********************
@@ -33,10 +30,6 @@ namespace keeprserver.server.Services
     {
       return _repo.GetKeepsByVaultId(vaultId);
     }
-    // Create 
-
-
-
 
     // GetAll
     internal List<Keep> GetAll()

@@ -61,3 +61,9 @@ VALUES
   ("please", "work");
 SELECT
   LAST_INSERT_ID();
+SELECT
+  k.*,
+  p.*
+FROM
+  keeps k
+  JOIN profiles p ON p.id = k.creatorId;

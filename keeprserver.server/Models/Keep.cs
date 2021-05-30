@@ -13,7 +13,7 @@ namespace keeprserver.server.Models
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
     // [Required]
-    [MaxLength(1)]
+    [MinLength(1)]
 
     public string Name { get; set; }
 

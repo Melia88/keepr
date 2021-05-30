@@ -60,7 +60,7 @@ namespace keeprserver.server.Repositories
     //   newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
     //   return newKeep;
     // }
-
+    // IN GetAll I need to "populate" the creators info so I get all from k & p
     public List<Keep> GetAll()
     {
       string sql = @"
