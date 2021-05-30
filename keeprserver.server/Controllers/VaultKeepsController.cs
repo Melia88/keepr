@@ -30,6 +30,7 @@ namespace keeprserver.server.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         vk.CreatorId = userInfo.Id;
         VaultKeeps newVK = _vkService.CreateVaultKeeps(vk);
+        newVK.Creator = userInfo;
         return Ok(newVK);
       }
       catch (System.Exception e)
@@ -38,24 +39,30 @@ namespace keeprserver.server.Controllers
       }
     }
 
-    // internal VaultKeeps GetVaultKeeps
-
-
-    // Delete
-    // [HttpDelete("{id}")]
-    // [Authorize]
-    // public async Task<ActionResult<string>> Remove(int id)
+    // /TODO internal VaultKeeps GetVaultKeeps
+    // [HttpGet]
+    // public async Task<ActionResult<List<VaultKeep>> GetVaultKeepById()
     // {
-    //   try
-    //   {
-    //     Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-    //     _vkService.Remove(id, userInfo.Id);
-    //     return Ok("Removed");
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   }
+
     // }
+
+    //// ADDED !!!!!!!!
+    // Delete
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<ActionResult<string>> Remove(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        _vkService.Remove(id, userInfo.Id);
+        return Ok("Removed");
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
   }
 }

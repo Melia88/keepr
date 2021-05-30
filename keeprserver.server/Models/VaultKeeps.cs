@@ -15,7 +15,7 @@ namespace keeprserver.server.Models
     // [Required]
     public string KeepsId { get; set; }
 
-    // public Profile Creator { get; set; }
+    public Profile Creator { get; set; }
   }
   public class VaultKeepsViewModel : Keep
   {

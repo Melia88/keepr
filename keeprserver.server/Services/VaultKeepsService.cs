@@ -21,19 +21,29 @@ namespace keeprserver.server.Services
     // Create 
     public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
     {
+      // if (vk.CreatorId != userId)
+      // {
+      //   throw new Exception("Cannot do that");
+      // }
+      // Keep vk = _repo.
       return _repo.CreateVaultKeeps(vk);
     }
 
+    // TODO GetVaultKeep
+
+    // ADDED !!!!!!!!
     // Delete
-    // public void Remove(int id, string userId)
-    // {
-    //   VaultKeeps vk = Get
-    //   if ( .CreatorId != userId)
-    //   {
-    //     throw new Exception("Cannot Delete");
-    //   }
-    //   return _repo.Remove();
-    // }
+    public void Remove(int id, string userId)
+    {
+      VaultKeeps found = _repo.Get(id);
+      if (found.CreatorId != userId)
+      {
+        throw new Exception("Invalid Request");
+      }
+      _repo.Remove(id);
+
+
+    }
 
 
 

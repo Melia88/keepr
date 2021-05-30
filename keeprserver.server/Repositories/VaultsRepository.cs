@@ -29,6 +29,14 @@ namespace keeprserver.server.Repositories
       newVault.Id = _db.ExecuteScalar<int>(sql, newVault);
       return newVault;
     }
+
+    internal IEnumerable<Vault> Get()
+    {
+      string sql = "SELECT * FROM vaults";
+      return _db.Query<Vault>(sql);
+    }
+
+
     // GetVaultById
     internal Vault GetVaultById(int id)
     {

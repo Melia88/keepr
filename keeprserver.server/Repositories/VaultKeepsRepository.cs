@@ -19,7 +19,7 @@ namespace keeprserver.server.Repositories
 
     // Get all keeps that belong to one vault
 
-    internal List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId)
+    public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId)
     {
       string sql = @"
       SELECT
@@ -38,11 +38,34 @@ namespace keeprserver.server.Repositories
         vk.vaultId = @id;";
       return _db.Query<VaultKeepsViewModel>(sql, new { vaultId }).ToList();
     }
+
+    // GetVaultKeep
+    public VaultKeeps GetVaultKeepById(int id)
+    {
+      string sql = @"
+      SELECT * FROM vault_keeps WHERE id = @id;
+      ";
+      return _db.QueryFirstOrDefault<VaultKeeps>(sql, new { id });
+    }
+    // // ADDED !!!!!!!!
+    internal VaultKeeps Get(int Id)
+    {
+      string sql = "SELECT * FROM vault_keeps WHERE id = @Id";
+      return _db.QueryFirstOrDefault<VaultKeeps>(sql, new { Id });
+    }
+
     public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
     {
-      string sql = @"INSERT INTO 
-            vault_keeps(creatorId, vaultId, keepsId)
-            VALUES (@CreatorId, @VaultId, @KeepsId);
+      string sql = @"
+      UPDATE keeps 
+      SET 
+      keeps = keeps + 1 
+      WHERE id = @vk.keepsId; 
+      INSERT INTO 
+            vault_keeps
+            (creatorId, vaultId, keepsId)
+            VALUES 
+            (@CreatorId, @VaultId, @KeepsId);
             SELECT LAST_INSERT_ID();
             ";
 
@@ -50,7 +73,7 @@ namespace keeprserver.server.Repositories
       return vk;
     }
 
-    internal void Remove(int id)
+    public void Remove(int id)
     {
       string sql = @"
       DELETE FROM vault_keeps WHERE id = @id LIMIT 1;

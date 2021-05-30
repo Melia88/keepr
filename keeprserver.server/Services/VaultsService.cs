@@ -28,6 +28,12 @@ namespace keeprserver.server.Services
       return _repo.Create(newVault);
     }
 
+    // ADDED !!!!!!!!
+    internal IEnumerable<Vault> Get()
+    {
+      return _repo.Get();
+    }
+
 
 
     //TODO GetProfilesVaults

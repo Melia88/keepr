@@ -31,7 +31,7 @@ namespace keeprserver.server.Controllers
     // CreateVault
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<Vault>> Create([FromBody] Vault vault)
+    public async Task<ActionResult<Vault>> Create(int id, [FromBody] Vault vault)
     {
       try
       {
@@ -50,6 +50,20 @@ namespace keeprserver.server.Controllers
       }
     }
 
+
+    // ---------------------------------------------*******
+    [HttpGet]
+    public ActionResult<IEnumerable<Vault>> Get()
+    {
+      try
+      {
+        return Ok(_vService.Get());
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     // -------------------------------------------------*********
     // GetAll
     [HttpGet]
@@ -106,6 +120,7 @@ namespace keeprserver.server.Controllers
     // }
 
     // GetKeepsByVaultId This is GET VAULTKEEPS in postman test!
+    // /api/vaults/{{vaultId}}/keeps
     [HttpGet("{id}/keeps")]
     public async Task<ActionResult<List<VaultKeepsViewModel>>> GetKeepsByVaultId(int id)
     {
