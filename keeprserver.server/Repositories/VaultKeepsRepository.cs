@@ -19,25 +19,25 @@ namespace keeprserver.server.Repositories
 
     // Get all keeps that belong to one vault
 
-    public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId)
-    {
-      string sql = @"
-      SELECT
-        k.*,
-        v.name as vaultName,
-        vk.id as vaultKeepsId,
-        vk.vaultId as vaultId,
-        vk.keepsId as keepsId
-        vk.creatorId as creatorId
-      FROM
-        vault_keeps vk
-      JOIN vaults v ON v.id = vk.vaultId
-      JOIN keeps k ON k.id = vk.keepsId
-      JOIN profiles p ON p.id = vk.profilesId
-      WHERE
-        vk.vaultId = @id;";
-      return _db.Query<VaultKeepsViewModel>(sql, new { vaultId }).ToList();
-    }
+    // public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId)
+    // {
+    //   string sql = @"
+    //   SELECT
+    //     k.*,
+    //     v.name as vaultName,
+    //     vk.id as vaultKeepsId,
+    //     vk.vaultId as vaultId,
+    //     vk.keepsId as keepsId
+    //     vk.creatorId as creatorId
+    //   FROM
+    //     vault_keeps vk
+    //   JOIN vaults v ON v.id = vk.vaultId
+    //   JOIN keeps k ON k.id = vk.keepsId
+    //   JOIN profiles p ON p.id = vk.profilesId
+    //   WHERE
+    //     vk.vaultId = @id;";
+    //   return _db.Query<VaultKeepsViewModel>(sql, new { vaultId }).ToList();
+    // }
 
     // GetVaultKeep
     public VaultKeeps GetVaultKeepById(int id)

@@ -38,16 +38,17 @@ namespace keeprserver.server.Repositories
 
 
     // GetVaultById
-    internal Vault GetVaultById(int id)
+    internal Vault GetVaultById(int vaultId)
     {
       string sql = @"
       SELECT 
         v.*,
+        v.id as vaultId,
         p.*
       From vaults v
       JOIN profiles p ON p.id = v.creatorId
-      WHERE v.id = @id";
-      return _db.QueryFirstOrDefault<Vault>(sql, new { id });
+      WHERE v.id = @Id";
+      return _db.QueryFirstOrDefault<Vault>(sql, new { Id = vaultId });
 
       // return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
       // {
@@ -104,7 +105,7 @@ namespace keeprserver.server.Repositories
       FROM vaults v
       JOIN profiles p ON p.id = v.creatorId
       WHERE
-        v.creatorId = @id AND v.IsPublic = 0;";
+        v.creatorId = @id AND v.isPrivate = 0;";
       return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
       {
         v.Creator = p;

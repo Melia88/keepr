@@ -77,19 +77,33 @@ namespace keeprserver.server.Repositories
       }, splitOn: "id").ToList();
     }
 
-    internal List<VaultKeepsViewModel> GetKeepsByVaultId(int TagId)
+    // internal List<VaultKeepsViewModel> GetKeepsByVaultId(int id)
+    // {
+    //   string sql = @"
+    //             SELECT 
+    //             k.*,
+    //             vk.id AS VaultKeepsId
+    //             FROM vault_keeps vk
+    //             INNER JOIN keeps k ON k.id = vk.keepsId
+    //             WHERE vaultId = @VaultId AND isPrivate = 0";
+    //   return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
+
+    // }
+    internal List<VaultKeepsViewModel> GetKeepsByVaultId(int id)
     {
       string sql = @"
                 SELECT 
                 k.*,
+                v.*,
+                vk.vaultId as vaultId,
                 vk.id AS VaultKeepsId
                 FROM vault_keeps vk
-                INNER JOIN keeps k ON k.id = vk.keepsId
-                WHERE vaultId = @VaultId AND isPrivate = 0";
-      return _db.Query<VaultKeepsViewModel>(sql, new { TagId }).ToList();
+                JOIN keeps k ON k.id = vk.keepsId
+                JOIN vault v ON v.id = vk.vaultId
+                WHERE vk.vaultId = @id AND isPrivate = 0";
+      return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
 
     }
-
     // -------------------------------------------------------
 
 

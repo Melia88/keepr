@@ -67,3 +67,34 @@ SELECT
 FROM
   keeps k
   JOIN profiles p ON p.id = k.creatorId;
+SELECT
+  v.*,
+  p.*
+From
+  vaults v
+  JOIN profiles p ON p.id = v.creatorId
+WHERE
+  v.id = 1;
+INSERT INTO
+  vaults (creatorId, name, description)
+VALUES
+  (
+    "9b1fabde-0565-432c-aeea-318a95a5fcd7",
+    "id check",
+    "some stuff"
+  );
+SELECT
+  *
+FROM
+  vaults
+WHERE
+  id = 52;
+SELECT
+  v.*,
+  v.id as vaultId,
+  p.*
+From
+  vaults v
+  JOIN profiles p ON p.id = v.creatorId
+WHERE
+  v.id = 52;
