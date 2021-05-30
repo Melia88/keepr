@@ -14,11 +14,21 @@ namespace keeprserver.server.Services
       _repo = repo;
     }
 
-    public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
-    {
-      return _repo.GetKeepsByVaultId(vaultId);
-    }
-    // Create 
+    // public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
+    // {
+    //   return _repo.GetKeepsByVaultId(vaultId);
+    // }
+    // // Create 
+    // public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
+    // {
+    //   // if (vk.CreatorId != userId)
+    //   // {
+    //   //   throw new Exception("Cannot do that");
+    //   // }
+    //   // Keep vk = _repo.
+    //   return _repo.CreateVaultKeeps(vk);
+    // }
+
     public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
     {
       // if (vk.CreatorId != userId)
@@ -29,7 +39,6 @@ namespace keeprserver.server.Services
       return _repo.CreateVaultKeeps(vk);
     }
 
-    // TODO GetVaultKeep
 
     // ADDED !!!!!!!!
     // Delete

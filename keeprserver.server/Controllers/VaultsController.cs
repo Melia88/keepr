@@ -128,7 +128,7 @@ namespace keeprserver.server.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         var userId = userInfo.Id;
-        List<VaultKeepsViewModel> keeps = _vkService.GetKeepsByVaultId(id, userId);
+        List<VaultKeepsViewModel> keeps = _kService.GetKeepsByVaultId(id, userId);
         return Ok(keeps);
       }
       catch (System.Exception e)

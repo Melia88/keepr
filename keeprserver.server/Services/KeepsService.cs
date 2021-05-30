@@ -29,6 +29,11 @@ namespace keeprserver.server.Services
       return _repo.Create(newKeep);
     }
     // ----------------------------------------------------********************
+    public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
+    {
+      return _repo.GetKeepsByVaultId(vaultId);
+    }
+    // Create 
 
 
 
