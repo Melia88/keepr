@@ -38,12 +38,8 @@ namespace keeprserver.server.Services
 
     //TODO GetProfilesVaults
     // This is coming from profiles controller
-    public List<Vault> GetProfilesVaults(string id, string userId)
+    public List<Vault> GetProfilesVaults(string id)
     {
-      if (id == userId)
-      {
-        return _repo.GetProfilesVaults(userId);
-      }
       return _repo.GetProfilesVaults(id);
     }
     // GetAll
