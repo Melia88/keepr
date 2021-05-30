@@ -25,20 +25,20 @@ namespace keeprserver.server.Services
     }
 
     // Delete
-    public void Remove(int id, string userId)
-    {
-      VaultKeeps vk = Get
-      if ( .CreatorId != userId)
-      {
-        throw new Exception("Cannot Delete");
-      }
-      return _repo.Remove();
-    }
+    // public void Remove(int id, string userId)
+    // {
+    //   VaultKeeps vk = Get
+    //   if ( .CreatorId != userId)
+    //   {
+    //     throw new Exception("Cannot Delete");
+    //   }
+    //   return _repo.Remove();
+    // }
 
 
 
 
-
+    // ----------------------------------------------------------------------**********************
 
     // GetKeepsByVaultId
     // public IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)

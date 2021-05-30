@@ -49,7 +49,7 @@ namespace keeprserver.server.Controllers
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        IEnumerable<Vault> vaults = _vService.GetProfilesVaults(id, userInfo.Id);
+        List<Vault> vaults = _vService.GetProfilesVaults(id, userInfo.Id);
         return Ok(vaults);
       }
       catch (Exception e)
@@ -65,7 +65,7 @@ namespace keeprserver.server.Controllers
     {
       try
       {
-        IEnumerable<Keep> keeps = _kService.GetProfilesKeeps(id);
+        List<Keep> keeps = _kService.GetProfilesKeeps(id);
         return Ok(keeps);
       }
       catch (Exception e)

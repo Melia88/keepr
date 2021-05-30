@@ -55,3 +55,9 @@ FROM
   JOIN keeps k ON k.id = vk.keepsId
 WHERE
   vk.vaultId = @id;
+INSERT INTO
+  keeps(name, description)
+VALUES
+  ("please", "work");
+SELECT
+  LAST_INSERT_ID();

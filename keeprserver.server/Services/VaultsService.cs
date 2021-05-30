@@ -24,6 +24,7 @@ namespace keeprserver.server.Services
     // CreateVault
     internal Vault Create(Vault newVault)
     {
+      // TODO B Logic so you can only create if youre logged in
       return _repo.Create(newVault);
     }
 
@@ -31,7 +32,7 @@ namespace keeprserver.server.Services
 
     //TODO GetProfilesVaults
     // This is coming from profiles controller
-    public IEnumerable<Vault> GetProfilesVaults(string id, string userId)
+    public List<Vault> GetProfilesVaults(string id, string userId)
     {
       if (id == userId)
       {
@@ -72,6 +73,10 @@ namespace keeprserver.server.Services
       // else if (vault.IsPrivate == true && vault.CreatorId != userId)
       // {
       //   throw new Exception("Private Vault, Only Creater Has Access!");
+      // }
+      // if (vault.IsPrivate == true && vault.CreatorId == userId)
+      // {
+      //   return vault;
       // }
       return vault;
     }

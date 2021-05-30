@@ -5,13 +5,13 @@ namespace keeprserver.server.Models
 {
   public class Vault
   {
-    [Required]
+    // [Required]
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
-    [Required]
+    // [Required]
     [MinLength(1)]
 
     public string Name { get; set; } = "Name Here";

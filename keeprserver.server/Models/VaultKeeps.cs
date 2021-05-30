@@ -8,23 +8,23 @@ namespace keeprserver.server.Models
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    [Required]
+    // [Required]
     public string CreatorId { get; set; }
-    [Required]
+    // [Required]
     public string VaultId { get; set; }
-    [Required]
+    // [Required]
     public string KeepsId { get; set; }
 
     // public Profile Creator { get; set; }
   }
   public class VaultKeepsViewModel : Keep
   {
-    [Required]
+    // [Required]
 
     public string VaultId { get; set; }
-    [Required]
+    // [Required]
     public string KeepsId { get; set; }
-    [Required]
+    // [Required]
     public int VaultKeepsId { get; set; }
 
     public string VaultName { get; set; }

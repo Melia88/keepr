@@ -29,8 +29,8 @@ namespace keeprserver.server.Controllers
 
 
     // CreateVault
-    [HttpPost]
     [Authorize]
+    [HttpPost]
     public async Task<ActionResult<Vault>> Create([FromBody] Vault vault)
     {
       try
@@ -80,6 +80,10 @@ namespace keeprserver.server.Controllers
         {
           throw new Exception("Private Vault, Only Creater Has Access!");
         }
+        if (vault.IsPrivate == true && vault.CreatorId == userId)
+        {
+          return vault;
+        }
         return Ok(vault);
       }
       catch (System.Exception e)
@@ -109,7 +113,7 @@ namespace keeprserver.server.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         var userId = userInfo.Id;
-        IEnumerable<VaultKeepsViewModel> keeps = _vkService.GetKeepsByVaultId(id, userId);
+        List<VaultKeepsViewModel> keeps = _vkService.GetKeepsByVaultId(id, userId);
         return Ok(keeps);
       }
       catch (System.Exception e)

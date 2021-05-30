@@ -50,6 +50,13 @@ namespace keeprserver.server.Repositories
       return vk;
     }
 
+    internal void Remove(int id)
+    {
+      string sql = @"
+      DELETE FROM vault_keeps WHERE id = @id LIMIT 1;
+      ";
+      _db.Execute(sql, new { id });
+    }
 
   }
 }

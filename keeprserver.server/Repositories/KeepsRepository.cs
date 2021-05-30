@@ -22,6 +22,7 @@ namespace keeprserver.server.Repositories
       string sql = @"
       SELECT
         k.*,
+        k.id as keepsId,
         p.*
       FROM
         keeps k
@@ -110,7 +111,7 @@ namespace keeprserver.server.Repositories
         p.*
       From keeps k
       JOIN profiles p ON p.id = k.creatorId
-      WHERE k.id = @id;
+      WHERE k.id = @Id;
       ";
       return _db.Query<Keep, Profile, Keep>(sql, (k, p) =>
       {
@@ -125,7 +126,6 @@ namespace keeprserver.server.Repositories
       string sql = @"
             UPDATE keeps 
             SET 
-                creatorId = @CreatorId,
                 name = @Name,
                 description = @Description,
                 img = @Img,

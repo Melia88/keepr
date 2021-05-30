@@ -24,6 +24,7 @@ namespace keeprserver.server.Services
     // CreateKeep
     public Keep Create(Keep newKeep)
     {
+      // TODO B Logic so you can only create if youre logged in
 
       return _repo.Create(newKeep);
     }

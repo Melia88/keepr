@@ -20,9 +20,10 @@ namespace keeprserver.server.Repositories
     internal Vault Create(Vault newVault)
     {
       string sql = @"
-                INSERT INTO 
-                vaults(creatorId, name, description, isPrivate)
-                VALUES (@CreatorId, @Name, @Description, @IsPrivate);
+                INSERT INTO vaults
+                (creatorId, name, description, isPrivate)
+                VALUES 
+                (@CreatorId, @Name, @Description, @IsPrivate);
                 SELECT LAST_INSERT_ID();
             ";
       newVault.Id = _db.ExecuteScalar<int>(sql, newVault);
@@ -83,7 +84,7 @@ namespace keeprserver.server.Repositories
 
     // GetProfilesVaults
     // Get all vaults that belong to one profile
-    internal IEnumerable<Vault> GetProfilesVaults(string id)
+    internal List<Vault> GetProfilesVaults(string id)
     {
       string sql = @"
       SELECT
@@ -100,7 +101,7 @@ namespace keeprserver.server.Repositories
       {
         v.Creator = p;
         return v;
-      }, new { id });
+      }, new { id }).ToList();
     }
 
     // RemoveVault
