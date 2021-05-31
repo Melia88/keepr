@@ -1,9 +1,11 @@
 <template>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="container">
-      <div class="row masonryholder">
-        <div class="card-columns">
-          <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
+    <div class="container-fluid">
+      <div class="row  masonryholder">
+        <div class="col-md-12 col-md-3">
+          <div class="card-columns">
+            <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
+          </div>
         </div>
       </div>
     </div>
@@ -124,5 +126,9 @@ export default {
 //     column-count: 5;
 //   }
 // }
+
+.card-columns{
+  column-count:4;
+}
 }
 </style>

@@ -96,7 +96,7 @@ namespace keeprserver.server.Controllers
         }
         if (vault.IsPrivate == true && vault.CreatorId == userId)
         {
-          return vault;
+          return Ok(vault);
         }
         // if (vault.IsPrivate == false)
         // {
