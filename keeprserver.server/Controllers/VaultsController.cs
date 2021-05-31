@@ -98,7 +98,12 @@ namespace keeprserver.server.Controllers
         {
           return vault;
         }
-        return Ok(vault);
+        // if (vault.IsPrivate == false)
+        // {
+        // return only public vaults
+        // }
+        // return only public vaults
+        return Ok();
       }
       catch (System.Exception e)
       {
