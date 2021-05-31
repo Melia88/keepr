@@ -1,96 +1,9 @@
 <template>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <!-- <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-primary text-secondary p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-secondary">Vue 3 Starter</span>
-    </h1> -->
     <div class="container">
       <div class="row masonryholder">
         <div class="card-columns">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fG5hdHVyZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">
-                Card title that wraps to a new line
-              </h5>
-              <p class="card-text">
-                This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-              </p>
-            </div>
-          </div>
-          <div class="card p-3">
-            <blockquote class="blockquote mb-0 card-body">
-              <p>A well-known quote, contained in a blockquote element.</p>
-              <footer class="blockquote-footer">
-                <small class="text-muted">
-                  Someone famous in <cite title="Source Title">Source Title</cite>
-                </small>
-              </footer>
-            </blockquote>
-          </div>
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fG5hdHVyZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">
-                Card title
-              </h5>
-              <p class="card-text">
-                This card has supporting text below as a natural lead-in to additional content.
-              </p>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </p>
-            </div>
-          </div>
-          <div class="card bg-primary text-white text-center p-3">
-            <blockquote class="blockquote mb-0">
-              <p>A well-known quote, contained in a blockquote element.</p>
-              <footer class="blockquote-footer text-white">
-                <small>
-                  Someone famous in <cite title="Source Title">Source Title</cite>
-                </small>
-              </footer>
-            </blockquote>
-          </div>
-          <div class="card text-center">
-            <div class="card-body">
-              <h5 class="card-title">
-                Card title
-              </h5>
-              <p class="card-text">
-                This card has a regular title and short paragraphy of text below it.
-              </p>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80" class="card-img" alt="...">
-          </div>
-          <div class="card p-3 text-right">
-            <blockquote class="blockquote mb-0">
-              <p>A well-known quote, contained in a blockquote element.</p>
-              <footer class="blockquote-footer">
-                <small class="text-muted">
-                  Someone famous in <cite title="Source Title">Source Title</cite>
-                </small>
-              </footer>
-            </blockquote>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">
-                Card title
-              </h5>
-              <p class="card-text">
-                This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.
-              </p>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </p>
-            </div>
-          </div>
+          <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
         </div>
       </div>
     </div>
@@ -98,10 +11,33 @@
 </template>
 
 <script>
+import { AppState } from '../AppState'
+import { computed, onMounted, reactive } from 'vue'
+import Notification from '../utils/Notification'
+import { keepsService } from '../services/KeepsService'
 export default {
-  name: 'Home'
-}
+  name: 'Home',
 
+  setup() {
+    const state = reactive({
+      account: computed(() => AppState.account),
+      keeps: computed(() => AppState.keeps)
+    })
+    onMounted(async() => {
+      try {
+        await keepsService.getAll()
+      } catch (error) {
+        Notification.toast('Error:' + error, 'error')
+      }
+    })
+    return {
+      state
+    }
+  },
+  components: {}
+}
+// Will need a v-if on keeps and shares incrementer
+// Will need to bring in
 </script>
 
 <style scoped lang="scss">
