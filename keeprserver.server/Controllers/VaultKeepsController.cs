@@ -47,7 +47,7 @@ namespace keeprserver.server.Controllers
     // }
 
     //// ADDED !!!!!!!!
-    // Delete
+    // Delete /api/vaultkeeps/{{vaultKeepId}
     [HttpDelete("{id}")]
     [Authorize]
     public async Task<ActionResult<string>> Remove(int id)

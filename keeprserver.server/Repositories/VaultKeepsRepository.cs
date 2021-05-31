@@ -48,10 +48,10 @@ namespace keeprserver.server.Repositories
       return _db.QueryFirstOrDefault<VaultKeeps>(sql, new { id });
     }
     // // ADDED !!!!!!!!
-    internal VaultKeeps Get(int Id)
+    internal VaultKeeps Get(int id)
     {
-      string sql = "SELECT * FROM vault_keeps WHERE id = @Id";
-      return _db.QueryFirstOrDefault<VaultKeeps>(sql, new { Id });
+      string sql = "SELECT * FROM vault_keeps WHERE id = @id";
+      return _db.QueryFirstOrDefault<VaultKeeps>(sql, new { id });
     }
 
     public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
