@@ -51,12 +51,12 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="row ">
-          <div class="col">
-            <div class="vaults">
-            <!-- <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" /> -->
-            </div>
-          </div>
+        <div class="row">
+          <!-- <div class="col-3"> -->
+          <!-- <div class="vaults"> -->
+          <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
+          <!-- </div> -->
+          <!-- </div> -->
         </div>
       </div>
     </div>
