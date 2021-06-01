@@ -69,7 +69,7 @@ namespace keeprserver.server.Services
     // }
 
     // GetVaultById security check
-    public Vault GetVaultById(int id)
+    public Vault GetVaultById(int id, string userId)
     {
       Vault vault = _repo.GetVaultById(id);
       if (vault == null)
@@ -84,19 +84,27 @@ namespace keeprserver.server.Services
       // {
       //   return vault;
       // }
-      return vault;
-    }
-
-    public Vault GetPublicVaultById(int id)
-    {
-
-      Vault publicVault = _repo.GetPublicVaultById(id);
-      if (publicVault == null)
+      else if (vault.CreatorId == userId | vault.IsPrivate == false)
       {
-        throw new Exception("Invalid Vault Id");
+        return vault;
+
       }
-      return publicVault;
+      else
+      {
+        throw new Exception("You are NOT the creator");
+      }
     }
+
+    // public Vault GetPublicVaultById(int id)
+    // {
+
+    //   Vault publicVault = _repo.GetPublicVaultById(id);
+    //   if (publicVault == null)
+    //   {
+    //     throw new Exception("Invalid Vault Id");
+    //   }
+    //   return publicVault;
+    // }
 
     // UpdateVault
     // internal Vault Update(Vault update, string userId)

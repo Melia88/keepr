@@ -88,23 +88,33 @@ namespace keeprserver.server.Controllers
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        var userId = userInfo.Id;
-        Vault vault = _vService.GetVaultById(id);
-        Vault publicVault = _vService.GetPublicVaultById(id);
-        if (vault.IsPrivate == true && vault.CreatorId != userId)
-        {
-          throw new Exception("Private Vault, Only Creater Has Access!");
-        }
-        if (vault.IsPrivate == true && vault.CreatorId == userId)
-        {
-          return Ok(vault);
-        }
-        if (vault.IsPrivate == false)
-        {
-          return Ok(publicVault);
-        }
+        // var userId = userInfo.Id;
+        // Vault vault = _vService.GetVaultById(id);
+        // Vault publicVault = _vService.GetPublicVaultById(id);
+        // if (vault.IsPrivate == true && vault.CreatorId != userId)
+        // {
+        //   return BadRequest("Private Vault, Only Creator Has Access!");
+        // }
+        // if (vault.IsPrivate == true && vault.CreatorId == userId)
+        // {
+        //   return Ok(vault);
+        // }
+        // if (vault.IsPrivate == false)
+        // {
+        //   return Ok(publicVault);
+        // }
 
-        return Ok(publicVault);
+        // return Ok(publicVault);
+        if (userInfo == null)
+        {
+          string userId = "Private Vault, Only Creator Has Access!";
+          return Ok(_vService.GetVaultById(id, userId));
+        }
+        else
+        {
+          string userId = userInfo.Id;
+          return Ok(_vService.GetVaultById(id, userId));
+        }
       }
       catch (System.Exception e)
       {
