@@ -1,19 +1,25 @@
 <template>
   <div class="keeps-component">
     <div class="card text-white shadow">
-      <img :src="keep.img" class="card-img" alt="...">
-      <div class="card-img-overlay align-items-end justify-content-between">
-        <h5 class="card-title">
-          {{ keep.name }}
-        </h5>
-        <p class="card-text">
-          {{ keep.description }}
-        </p>
-
-        <p class="card-text">
-          {{ keep.views }}
-        </p>
-        <img :src="keep.creator.picture" class="creator-pic rounded-circle" alt="...">
+      <img :src="keep.img"
+           class="card-img"
+           alt="..."
+      >
+      <div class="card-img-overlay d-flex align-items-end justify-content-between">
+        <button title="View Details"
+                type="button"
+                class="btn btn-outline-transparent text-light"
+                data-toggle="modal"
+                data-target="#keepsDetailsModal"
+        >
+          <!-- v-if="state.user.isAuthenticated" -->
+          <h5 class="card-title mb-2">
+            {{ keep.name }}
+          </h5>
+        </button>
+        <router-link :to="{name: 'ProfileDetailsPage', params: {id: keep.creator.id}}">
+          <img class="creator-pic rounded-circle small-img" :src="keep.creator.picture" alt="Creator Photo">
+        </router-link>
       </div>
     </div>
   </div>
@@ -42,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .creator-pic{
-  max-height: 1.5rem;
-  max-width: 1.5rem;
+  max-height: 2rem;
+  max-width: 2rem;
 }
 </style>

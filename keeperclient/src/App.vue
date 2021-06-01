@@ -4,6 +4,8 @@
   </header>
   <main>
     <router-view />
+    <KeepDetailsModalComponent />
+    <CreateKeepModal />
   </main>
   <footer>
     <div class="bg-dark text-light text-center p-4">

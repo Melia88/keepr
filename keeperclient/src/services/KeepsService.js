@@ -7,5 +7,10 @@ class KeepsService {
     AppState.keeps = res.data
     console.log(res.data)
   }
+
+  // GETBYID
+  async createKeep(body) {
+    await api.post('api/keeps', body)
+  }
 }
 export const keepsService = new KeepsService()
