@@ -12,9 +12,9 @@
           <div class="div modal-body p-1">
             <!-- ------------------------------------------------------------------------------------ -->
             <div class="div container-fluid">
-              <div class="row">
+              <div class="row" v-if="state.activeKeep">
                 <div class="col-12 col-md-6 m-0 p-0">
-                  <img src="https://images.unsplash.com/photo-1525538182201-02cd1909effb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80" alt="" class="w-100">
+                  <img :src="state.activeKeep.img" alt="" class="w-100">
                 </div>
                 <div class="col-12 col-md-6 p-1">
                   <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -30,21 +30,24 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <p> <i class="fas fa-eye text-primary mr-4"></i> <i class="fab fa-kickstarter-k text-primary ml-4"></i> </p>
+                      <p> <i class="fas fa-eye text-primary mr-4"><span class="mx-2">{{ state.activeKeep.views }}</span></i> <i class="fab fa-kickstarter-k text-primary ml-4"> <span class="mx-2">{{ state.activeKeep.keeps }}</span></i> </p>
                     </div>
                     <div class="card-body">
                       <h5 class="card-title">
-                        Special title treatment
+                        {{ state.activeKeep.name }}
                       </h5>
-                      <!-- {{ keep.name }} -->
                       <p class="card-text">
-                        With supporting text below as a natural lead-in to additional content.
+                        {{ state.activeKeep.description }}
                       </p>
                     </div>
                     <div class="card-footer footer-light text-muted">
                       <a href="#" class="btn btn-primary">Go somewhere</a>
-                      <i class="far fa-trash-alt text-secondary ml-5 pl-5"></i>
-                      <!-- Creator pic & name -->
+                      <i class="far fa-trash-alt text-secondary mx-5 pl-5" @click="deleteKeep" v-if="state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
+
+                      <router-link :to="{name: 'ProfileDetailsPage', params: {id: state.activeKeep.creator.id}}" data-dismiss="modal">
+                        {{ state.activeKeep.creator.name }}
+                        <img class="creator-pic rounded-circle small-img" :src="state.activeKeep.creator.picture" alt="Creator Photo">
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -60,6 +63,9 @@
 </template>
 
 <script>
+import { computed, reactive } from 'vue'
+
+import { AppState } from '../AppState'
 export default {
   name: 'KeepDetailsModalComponent',
   props: {
@@ -68,8 +74,20 @@ export default {
       required: true
     }
   },
-  setup() {
-    return {}
+  setup(props) {
+    const state = reactive({
+      activeKeep: computed(() => AppState.activeKeep),
+      user: computed(() => AppState.user),
+      account: computed(() => AppState.account)
+
+    })
+    return {
+      state
+      // activeKeepDetails() {
+      //   AppState.activeKeep = props.keep
+      // }
+      // TODO write the delete keep
+    }
   },
   components: {}
 }
@@ -78,5 +96,12 @@ export default {
 <style lang="scss" scoped>
 .modal-body{
   min-height: 50vh;
+}
+.card{
+  min-height: 65vh;
+}
+.creator-pic{
+  max-height: 2rem;
+  max-width: 2rem;
 }
 </style>

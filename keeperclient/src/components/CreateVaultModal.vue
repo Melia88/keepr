@@ -1,7 +1,7 @@
 <template>
   <div class="create-vault-modal">
     <div class="modal"
-         id="new-vaults-form"
+         id="new-vault-form"
          tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalLabel"
@@ -56,26 +56,30 @@
               </textarea>
             </div>
             <!-- ---------------------------------------------------------------------------------- -->
-            <div class="AutoAddCheckbox text-left mr-5">
-              <input class="action m-2"
+            <p class="ml-3">
+              Set to Private?
+            </p>
+            <div class="SetToPrivateCheckbox text-left mr-5">
+              <input class="action ml-3"
                      type="checkbox"
-                     id="AutoAdd"
-                     name="AutoAdd"
-                     title="Click to Auto Add Item"
-                     @click="state.setToAutoAdd.autoAdd = !state.setToAutoAdd.autoAdd"
+                     id="isPrivate"
+                     name="isPrivate"
+                     title="Click to Set This Vault as Private"
+                     @click="state.setToPrivate.isPrivate = !state.setToPrivate.isPrivate"
               >
               <!-- step1 this state.setToAutoAdd.autoAdd is the global variable called autoAdd that is set in appState -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-link text-secondary" data-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-success text-light">
+                  Create
+                </button>
+              </div>
             </div>
           </form>
-        </div>
-        <!-- ---------------------------------------------------------------------------------- -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-link text-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="submit" class="btn btn-success text-light">
-            Create
-          </button>
+
+          <!-- ---------------------------------------------------------------------------------- -->
         </div>
       </div>
     </div>
@@ -83,10 +87,42 @@
 </template>
 
 <script>
+import { computed, reactive } from 'vue'
+import { vaultsService } from '../services/VaultsService'
+import { AppState } from '../AppState'
+import Notification from '../utils/Notification'
+import { useRoute } from 'vue-router'
+import $ from 'jquery'
 export default {
   name: 'CreateVaultModal',
   setup() {
-    return {}
+    const route = useRoute()
+    const state = reactive({
+      newVault: { },
+      activeProfile: computed(() => AppState.activeProfile),
+      vaults: computed(() => AppState.vaults),
+      // this is bringing in the entire appstate and saving it to setToAutoAdd so we can drill into it and get the global variable autoAdd
+      setToPrivate: computed(() => AppState)
+    })
+    return {
+      state,
+      route,
+      async createVault() {
+        try {
+          state.newVault.creatorId = route.params.id
+          // step3 if they clicked the checkbox above then flip the server model to true
+          if (state.setToPrivate.isPrivate) {
+            state.newVault.isPrivate = true
+            await vaultsService.createVault(state.newVault)
+          }
+          state.newVault = {}
+          $('#new-vault-form').modal('hide')
+          await Notification.toast('Vault Successfully Created!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
+    }
   },
   components: {}
 }

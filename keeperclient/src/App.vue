@@ -6,6 +6,7 @@
     <router-view />
     <KeepDetailsModalComponent />
     <CreateKeepModal />
+    <CreateVaultModal />
   </main>
   <!-- <footer>
     <div class="bg-dark text-light text-center p-4">

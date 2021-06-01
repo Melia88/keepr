@@ -11,6 +11,8 @@ class KeepsService {
   // GETBYID
   async createKeep(body) {
     await api.post('api/keeps', body)
+
+    body.keeps += 1
   }
 }
 export const keepsService = new KeepsService()

@@ -11,7 +11,7 @@
                 class="btn btn-outline-transparent text-light"
                 data-toggle="modal"
                 data-target="#keepsDetailsModal"
-                :id="keep.id"
+                @click="activeKeepDetails()"
         >
           <!-- v-if="state.user.isAuthenticated" -->
           <h5 class="card-title mb-2">
@@ -27,6 +27,9 @@
 </template>
 
 <script>
+import { computed, reactive } from 'vue'
+
+import { AppState } from '../AppState'
 export default {
   name: 'KeepsComponent',
   props: {
@@ -35,12 +38,15 @@ export default {
       required: true
     }
   },
-  setup() {
-    // const state = reactive({
-    //   account: computed(() => AppState.account)
-    // })
+  setup(props) {
+    const state = reactive({
+      activeKeep: computed(() => AppState.activeKeep)
+    })
     return {
-      // state
+      state,
+      activeKeepDetails() {
+        AppState.activeKeep = props.keep
+      }
     }
   },
   components: {}

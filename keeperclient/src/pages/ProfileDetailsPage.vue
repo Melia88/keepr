@@ -5,15 +5,18 @@
         <img :src="state.activeProfile.picture" class="rounded-circle creator-pic" alt="">
       </div>
       <div class="col-5">
-        <p class="profile-pic mb-4">
+        <b class="profile-pic mb-4">
           {{ state.activeProfile.name }}
-        </p>
+        </b>
         <p class="keeps mb-4">
           {{ state.keeps.keeps }}
         </p>
 
         <p class="vaults mb-4">
-          Keeps: <span></span> {{ state.vaults.length }}
+          Vaults: <span></span> {{ state.vaults.length }}
+        </p>
+        <p class="vaults mb-4">
+          Keeps: <span></span> {{ state.keeps.length }}
         </p>
       </div>
       <div class="col">
@@ -45,7 +48,7 @@
                   data-toggle="modal"
                   data-target="#new-vault-form"
           >
-            <i class="fas fa-plus text-success" aria-hidden="true"></i>
+            <i class="fas fa-plus text-success" aria-hidden="true" v-if="state.activeProfile.id == state.account.id"></i>
           </button>
         </h1>
       </div>
@@ -75,7 +78,7 @@
                   data-toggle="modal"
                   data-target="#new-keeps-form"
           >
-            <i class="fas fa-plus text-success" aria-hidden="true"></i>
+            <i class="fas fa-plus text-success" aria-hidden="true" v-if="state.activeProfile.id == state.account.id"></i>
           </button>
         </h1>
       </div>
