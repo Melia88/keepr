@@ -41,12 +41,41 @@
                       </p>
                     </div>
                     <div class="card-footer footer-light text-muted">
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                      <i class="far fa-trash-alt text-secondary mx-5 pl-5" @click="deleteKeep" v-if="state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
+                      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                      <!-- This starts the move task dropdown -->
+                      <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle"
+                                type="button"
+                                title="Add Keep to a Vault"
+                                id="dropdownMenu2"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                          <span class="text-dark">
+                            Add to a Vault
+                          </span>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <a class="dropdown-item action"
+                             type="button"
+                             title="Add to this Vault!"
+                          >
+                            <!-- v-for="list in state.list"
+                             :key="list.id"
+                             @click="moveTask(task, list.id)" -->
+                            <p>
+                              <!-- {{ list.title }} -->
+                            </p>
+                          </a>
+                        </div>
+                      </div>
+                      <!------------------------- this ends the move task dropdown -->
+                      <i class="far fa-trash-alt text-secondary mx-5 pl-5 action" title="Delete Keep" @click="deleteKeep(state.activeKeep)" v-if="state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
 
                       <router-link :to="{name: 'ProfileDetailsPage', params: {id: state.activeKeep.creator.id}}" data-dismiss="modal">
                         {{ state.activeKeep.creator.name }}
-                        <img class="creator-pic rounded-circle small-img" :src="state.activeKeep.creator.picture" alt="Creator Photo">
+                        <img class="creator-pic rounded-circle small-img action" title="Go to Keep Creator's Profile" :src="state.activeKeep.creator.picture" alt="Creator Photo">
                       </router-link>
                     </div>
                   </div>
@@ -64,8 +93,11 @@
 
 <script>
 import { computed, reactive } from 'vue'
-
+import { keepsService } from '../services/KeepsService'
 import { AppState } from '../AppState'
+import Notification from '../utils/Notification'
+import $ from 'jquery'
+
 export default {
   name: 'KeepDetailsModalComponent',
   props: {
@@ -82,11 +114,22 @@ export default {
 
     })
     return {
-      state
+      state,
       // activeKeepDetails() {
       //   AppState.activeKeep = props.keep
       // }
       // TODO write the delete keep
+      async deleteKeep(activeKeep) {
+        try {
+          if (await Notification.confirmAction()) {
+            await keepsService.deleteKeep(activeKeep.id)
+            // Notification.toast('Successfully Deleted Note', 'success')
+          }
+          $('#keepsDetailsModal').modal('hide')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
@@ -98,10 +141,13 @@ export default {
   min-height: 50vh;
 }
 .card{
-  min-height: 65vh;
+  min-height: 84vh;
 }
 .creator-pic{
   max-height: 2rem;
   max-width: 2rem;
+}
+.action{
+  cursor: pointer;
 }
 </style>

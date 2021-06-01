@@ -4,9 +4,10 @@ import { api } from './AxiosService'
 class VaultsService {
   async createVault(body) {
     const res = await api.post('api/vaults', body)
+    AppState.profileVaults.push(res.data)
     // this.getVaultById(body.id)
     // body.vaults += 1
-    console.log(res.data)
+    console.log(body)
   }
 
   // GETBYID

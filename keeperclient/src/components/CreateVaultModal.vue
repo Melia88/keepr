@@ -20,10 +20,10 @@
           <form @submit.prevent="createVault">
             <div class="modal-body">
               <div class="form-group">
-                <label for="title">Title</label>
+                <label for="name">Title</label>
                 <input type="text"
                        class="form-control"
-                       id="title"
+                       id="name"
                        placeholder="Title..."
                        min="1"
                        v-model="state.newVault.name"
@@ -67,15 +67,15 @@
                      title="Click to Set This Vault as Private"
                      @click="state.setToPrivate.isPrivate = !state.setToPrivate.isPrivate"
               >
-              <!-- step1 this state.setToAutoAdd.autoAdd is the global variable called autoAdd that is set in appState -->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-link text-secondary" data-dismiss="modal">
-                  Close
-                </button>
-                <button type="submit" class="btn btn-success text-light">
-                  Create
-                </button>
-              </div>
+            </div>
+            <!-- step1 this state.setToAutoAdd.autoAdd is the global variable called autoAdd that is set in appState -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-link text-secondary" data-dismiss="modal">
+                Close
+              </button>
+              <button type="submit" class="btn btn-success text-light" @click="createVault()">
+                Create
+              </button>
             </div>
           </form>
 
@@ -114,7 +114,11 @@ export default {
           if (state.setToPrivate.isPrivate) {
             state.newVault.isPrivate = true
             await vaultsService.createVault(state.newVault)
+          } else {
+            state.newVault.isPrivate = false
+            await vaultsService.createVault(state.newVault)
           }
+          // if (!state.setToPrivate.isPrivate)
           state.newVault = {}
           $('#new-vault-form').modal('hide')
           await Notification.toast('Vault Successfully Created!', 'success')
