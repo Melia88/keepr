@@ -109,45 +109,26 @@ namespace keeprserver.server.Repositories
 
     // GetProfilesVaults
     // Get all vaults that belong to one profile. THis is a get by creatorId
-    internal List<Vault> GetProfilesPublicVaults(string id)
+
+    // ----------------------------------------------------
+    internal List<Vault> GetVaultsByProfileId(string id)
     {
       string sql = @"
-      SELECT
-        v.*,
-        v.name as vaultName,
-        v.description as vaultsDescription,
-        v.creatorId as creatorId,
-        p.*
+      SELECT 
+      v.*,
+      p.*
       FROM vaults v
-      JOIN profiles p ON p.id = v.creatorId
-      WHERE
-        v.creatorId = @id AND v.isPrivate = 0;";
+      JOIN profiles p ON v.creatorId = p.id
+      WHERE v.creatorId = @id;";
       return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
       {
         v.Creator = p;
         return v;
-      }, new { id }).ToList();
-    }
-    internal List<Vault> GetMyVaultsByProfileId(string id)
-    {
-      string sql = @"
-      SELECT
-        v.*,
-        v.name as vaultName,
-        v.description as vaultsDescription,
-        v.creatorId as creatorId,
-        p.*
-      FROM vaults v
-      JOIN profiles p ON p.id = v.creatorId
-      WHERE
-        v.creatorId = @id;";
-      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
-      {
-        v.Creator = p;
-        return v;
-      }, new { id }).ToList();
+      }, new { id }, splitOn: "id").ToList();
     }
 
+
+    // ----------------------------------------------------
     // getMyVaults
 
 

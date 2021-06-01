@@ -44,25 +44,26 @@ namespace keeprserver.server.Controllers
     // GetProfilesVaults
     // Send to Vaults Service
     [HttpGet("{id}/vaults")]
-    public async Task<ActionResult<List<Vault>>> GetProfilesVaults(string id)
+    public ActionResult<List<Vault>> GetProfilesVaults(string id)
     {
       try
       {
-        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        var userId = userInfo.Id;
+        // Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        // var userId = userInfo.Id;
         // if youre not logged in & the vault isnt set to private then show the vaults
-        Profile p = _pService.GetProfileById(id);
-        List<Vault> publicVaults = _vService.GetProfilesPublicVaults(id);
-        if (userId == p.Id)
-        {
-          List<Vault> allMyVaults = _vService.GetMyVaultsByProfileId(userId);
-          return Ok(allMyVaults);
-        }
-        if (userId != p.Id)
-        {
-          return Ok(publicVaults);
-        }
-        return Ok(publicVaults);
+        // Profile p = _pService.GetProfileById(id);
+        // List<Vault> publicVaults = _vService.GetProfilesPublicVaults(id);
+        // if (userId == p.Id)
+        // {
+        //   List<Vault> allMyVaults = _vService.GetMyVaultsByProfileId(userId);
+        //   return Ok(allMyVaults);
+        // }
+        // if (userId != p.Id)
+        // {
+        //   return Ok(publicVaults);
+        // }
+        // return Ok(publicVaults);
+        return Ok(_vService.GetVaultsByProfileId(id));
       }
       catch (Exception e)
       {

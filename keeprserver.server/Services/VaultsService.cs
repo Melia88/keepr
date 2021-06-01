@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using keeprserver.server.Models;
 using keeprserver.server.Repositories;
 
@@ -36,15 +37,13 @@ namespace keeprserver.server.Services
 
 
 
-    //TODO GetProfilesVaults
+    // TODO GetProfilesVaults
     // This is coming from profiles controller
-    public List<Vault> GetProfilesPublicVaults(string id)
+    public List<Vault> GetVaultsByProfileId(string id)
     {
-      return _repo.GetProfilesPublicVaults(id);
-    }
-    public List<Vault> GetMyVaultsByProfileId(string id)
-    {
-      return _repo.GetMyVaultsByProfileId(id);
+      List<Vault> vaults = _repo.GetVaultsByProfileId(id);
+      return vaults.ToList().FindAll(v => v.IsPrivate == false);
+
     }
     // GetAll
     internal List<Vault> GetAll()
