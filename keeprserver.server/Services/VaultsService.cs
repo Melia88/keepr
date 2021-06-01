@@ -87,6 +87,17 @@ namespace keeprserver.server.Services
       return vault;
     }
 
+    public Vault GetPublicVaultById(int id)
+    {
+
+      Vault publicVault = _repo.GetPublicVaultById(id);
+      if (publicVault == null)
+      {
+        throw new Exception("Invalid Vault Id");
+      }
+      return publicVault;
+    }
+
     // UpdateVault
     // internal Vault Update(Vault update, string userId)
     // {

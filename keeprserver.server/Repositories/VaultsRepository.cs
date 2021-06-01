@@ -38,23 +38,39 @@ namespace keeprserver.server.Repositories
 
 
     // GetVaultById
-    internal Vault GetVaultById(int vaultId)
+    internal Vault GetPublicVaultById(int id)
     {
       string sql = @"
       SELECT 
         v.*,
-        v.id as vaultId,
         p.*
-      From vaults v
+      FROM vaults v
+      JOIN profiles p ON p.id = v.creatorId
+      WHERE v.id = @Id AND v.isPrivate = 0;";
+      // return _db.QueryFirstOrDefault<Vault>(sql, new { Id = id });
+
+      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
+      {
+        v.Creator = p;
+        return v;
+      }, new { id }).FirstOrDefault();
+    }
+    internal Vault GetVaultById(int id)
+    {
+      string sql = @"
+      SELECT 
+        v.*,
+        p.*
+      FROM vaults v
       JOIN profiles p ON p.id = v.creatorId
       WHERE v.id = @Id";
-      return _db.QueryFirstOrDefault<Vault>(sql, new { Id = vaultId });
+      // return _db.QueryFirstOrDefault<Vault>(sql, new { Id = id });
 
-      // return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
-      // {
-      //   v.Creator = p;
-      //   return v;
-      // }, new { id }).FirstOrDefault();
+      return _db.Query<Vault, Profile, Vault>(sql, (v, p) =>
+      {
+        v.Creator = p;
+        return v;
+      }, new { id }).FirstOrDefault();
     }
 
     internal List<Vault> GetAll()
@@ -79,7 +95,7 @@ namespace keeprserver.server.Repositories
       string sql = @"
             UPDATE vaults 
             SET 
-                creatorId = @CreatorId
+                creatorId = @CreatorId,
                 name = @Name,
                 description = @Description,
                 isPrivate = @IsPrivate
