@@ -68,7 +68,7 @@ namespace keeprserver.server.Repositories
         k.*,
         p.*
       FROM keeps k
-      JOIN profiles p ON p.id = k.creatorId;  
+      JOIN profiles p ON k.creatorId = p.id;  
       ";
       return _db.Query<Keep, Profile, Keep>(sql, (k, p) =>
       {
@@ -116,7 +116,7 @@ namespace keeprserver.server.Repositories
         p.*
       From keeps k
       JOIN profiles p ON p.id = k.creatorId
-      WHERE k.id = @Id;
+      WHERE k.id = @id;
       ";
       return _db.Query<Keep, Profile, Keep>(sql, (k, p) =>
       {

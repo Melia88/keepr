@@ -36,6 +36,7 @@
                       <h5 class="card-title">
                         Special title treatment
                       </h5>
+                      <!-- {{ keep.name }} -->
                       <p class="card-text">
                         With supporting text below as a natural lead-in to additional content.
                       </p>
@@ -61,6 +62,12 @@
 <script>
 export default {
   name: 'KeepDetailsModalComponent',
+  props: {
+    keep: {
+      type: Object,
+      required: true
+    }
+  },
   setup() {
     return {}
   },
@@ -69,5 +76,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.modal-body{
+  min-height: 50vh;
+}
 </style>

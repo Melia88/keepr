@@ -11,9 +11,10 @@
         <p class="keeps mb-4">
           {{ state.keeps.keeps }}
         </p>
-        <!-- <p class="vaults mb-4">
-        {{ state.vaults.length }}
-      </p> -->
+
+        <p class="vaults mb-4">
+          Keeps: <span></span> {{ state.vaults.length }}
+        </p>
       </div>
       <div class="col">
         <span>
@@ -81,7 +82,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="row  masonryholder">
+        <div class="row  masonryholder" v-if="state.keeps">
           <div class="col">
             <div class="card-columns">
               <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />

@@ -11,6 +11,7 @@
                 class="btn btn-outline-transparent text-light"
                 data-toggle="modal"
                 data-target="#keepsDetailsModal"
+                :id="keep.id"
         >
           <!-- v-if="state.user.isAuthenticated" -->
           <h5 class="card-title mb-2">
