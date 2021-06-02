@@ -21,16 +21,16 @@ namespace keeprserver.server.Models
   {
     // [Required]
 
-    public int VaultId { get; set; }
+    // public int VaultId { get; set; }
     // [Required]
-    public int KeepsId { get; set; }
+    // public int KeepId { get; set; }
     // [Required]
-    public int VaultKeepsId { get; set; }
+    public int VaultKeepId { get; set; }
 
-    public string VaultName { get; set; }
-    public string VaultDescription { get; set; } = "No Description";
+    // public string VaultName { get; set; }
+    // public string VaultDescription { get; set; } = "No Description";
 
-    public bool IsPrivate { get; set; }
+    // public bool IsPrivate { get; set; }
 
   }
 }

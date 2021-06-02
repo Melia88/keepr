@@ -82,7 +82,7 @@ namespace keeprserver.server.Repositories
     //   string sql = @"
     //             SELECT 
     //             k.*,
-    //             vk.id AS VaultKeepsId
+    //             vk.id AS VaultKeepId
     //             FROM vault_keeps vk
     //             INNER JOIN keeps k ON k.id = vk.keepId
     //             WHERE vaultId = @VaultId AND isPrivate = 0";
@@ -93,16 +93,15 @@ namespace keeprserver.server.Repositories
     {
       string sql = @"
               SELECT
-  k.*,
-  vk.id AS VaultKeepsId,
-  p.*,
-  vk.*
-FROM
-  vault_keeps vk
-  JOIN keeps k ON k.id = vk.keepId
-  JOIN profiles p ON k.creatorId = p.id
-WHERE
-  vk.vaultId = @id ";
+                k.*,
+                vk.id AS VaultKeepId,
+                p.*
+              FROM
+                vault_keeps vk
+              JOIN keeps k ON k.id = vk.keepId
+              JOIN profiles p ON k.creatorId = p.id
+              WHERE
+                vk.vaultId = @id ";
       // return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
       return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (k, p) =>
      {

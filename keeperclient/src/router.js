@@ -26,6 +26,11 @@ const routes = [
     path: '/profiles/:id',
     name: 'ProfileDetailsPage',
     component: loadPage('ProfileDetailsPage')
+  },
+  {
+    path: '/vault/:id/keeps',
+    name: 'VaultKeepPage',
+    component: loadPage('VaultKeepPage')
   }
 ]
 

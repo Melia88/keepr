@@ -83,7 +83,7 @@ namespace keeprserver.server.Services
       // {
       //   return vault;
       // }
-      else if (vault.CreatorId == userId | vault.IsPrivate == false)
+      else if (vault.CreatorId == userId || vault.IsPrivate == false)
       {
         return vault;
       }

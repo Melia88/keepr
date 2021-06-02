@@ -42,7 +42,7 @@
                     </div>
                     <div class="card-footer footer-light text-muted">
                       <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                      <!-- This starts the move task dropdown -->
+                      <!-- This starts the move keep to a vault dropdown -->
                       <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle"
                                 type="button"
@@ -56,22 +56,21 @@
                             Add to a Vault
                           </span>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                           <a class="dropdown-item action"
                              type="button"
                              title="Add to this Vault!"
-                          >
-                            <!-- v-for="list in state.list"
-                             :key="list.id"
-                             @click="moveTask(task, list.id)" -->
-                            <p>
-                              <!-- {{ list.title }} -->
-                            </p>
-                          </a>
+                          > -->
+                        <!-- v-for="vault in state.vault"
+                             :key="vault.id"
+                             @click="moveToVault" -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <VaultNameComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
                         </div>
+                        <!-- </div> -->
                       </div>
                       <!------------------------- this ends the move task dropdown -->
-                      <i class="far fa-trash-alt text-secondary mx-5 pl-5 action" title="Delete Keep" @click="deleteKeep(state.activeKeep)" v-if="state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
+                      <i class="far fa-trash-alt text-secondary mx-2 pl-2 action" title="Delete Keep" @click="deleteKeep(state.activeKeep)" v-if="state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
 
                       <router-link :to="{name: 'ProfileDetailsPage', params: {id: state.activeKeep.creator.id}}" data-dismiss="modal">
                         {{ state.activeKeep.creator.name }}
@@ -94,6 +93,7 @@
 <script>
 import { computed, reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
@@ -110,7 +110,9 @@ export default {
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
       user: computed(() => AppState.user),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      activeProfile: computed(() => AppState.activeProfile),
+      vaults: computed(() => AppState.profileVaults)
 
     })
     return {
@@ -126,6 +128,19 @@ export default {
             // Notification.toast('Successfully Deleted Note', 'success')
           }
           $('#keepsDetailsModal').modal('hide')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      // this creates a vaultkeep
+      async moveToVault() {
+        try {
+          const newVaultKeep = {
+            activeKeepId: state.activeKeepId.id,
+            vaultId: state.vault.id
+          }
+          await vaultKeepsService.moveToVault(newVaultKeep)
+          Notification.toast('Successfully Added Keep to Vault!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
@@ -150,4 +165,5 @@ export default {
 .action{
   cursor: pointer;
 }
+
 </style>
