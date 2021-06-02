@@ -65,7 +65,7 @@
                              :key="vault.id"
                              @click="moveToVault" -->
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                          <VaultNameComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
+                          <VaultNameComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" :keep="keep" />
                         </div>
                         <!-- </div> -->
                       </div>
@@ -93,7 +93,7 @@
 <script>
 import { computed, reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
-import { vaultKeepsService } from '../services/VaultKeepsService'
+// import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
@@ -131,20 +131,20 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
-      },
-      // this creates a vaultkeep
-      async moveToVault() {
-        try {
-          const newVaultKeep = {
-            activeKeepId: state.activeKeepId.id,
-            vaultId: state.vault.id
-          }
-          await vaultKeepsService.moveToVault(newVaultKeep)
-          Notification.toast('Successfully Added Keep to Vault!', 'success')
-        } catch (error) {
-          Notification.toast('Error: ' + error, 'error')
-        }
       }
+      // this creates a vaultkeep
+      // async moveToVault() {
+      //   try {
+      //     const newVaultKeep = {
+      //       activeKeepId: state.activeKeep.id,
+      //       vaultId: state.vault.id
+      //     }
+      //     await vaultKeepsService.moveToVault(newVaultKeep)
+      //     Notification.toast('Successfully Added Keep to Vault!', 'success')
+      //   } catch (error) {
+      //     Notification.toast('Error: ' + error, 'error')
+      //   }
+      // }
     }
   },
   components: {}
