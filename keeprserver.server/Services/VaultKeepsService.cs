@@ -31,10 +31,6 @@ namespace keeprserver.server.Services
 
     public VaultKeeps CreateVaultKeeps(VaultKeeps vk)
     {
-      // if (vk.CreatorId != userId)
-      // {
-      //   throw new Exception("Cannot do that");
-      // }
       // Keep vk = _repo.
       return _repo.CreateVaultKeeps(vk);
     }
@@ -44,13 +40,12 @@ namespace keeprserver.server.Services
     // Delete
     public void Remove(int id, string userId)
     {
-      VaultKeeps found = _repo.Get(id);
+      VaultKeepsViewModel found = _repo.GetVaultKeepById(id);
       if (found.CreatorId != userId)
       {
         throw new Exception("Invalid Request");
       }
       _repo.Remove(id);
-
 
     }
 
@@ -59,16 +54,16 @@ namespace keeprserver.server.Services
 
     // ----------------------------------------------------------------------**********************
 
-    // GetKeepsByVaultId
-    // public IEnumerable<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
-    // {
-    //   Vault vault = _repo.GetVaultById(vaultId);
-    //   if (vault.CreatorId != userId)
-    //   {
-    //     throw new Exception("Not Yours!");
-    //   }
+    // GetVaultKeepById
+    public VaultKeepsViewModel GetVaultKeepById(int id)
+    {
+      VaultKeepsViewModel vk = _repo.GetVaultKeepById(id);
+      if (vk == null)
+      {
+        throw new Exception("Invalid ID");
+      }
 
-    //   return _vkrepo.GetKeepsByVaultId(vaultId);
-    // }
+      return _repo.GetVaultKeepById(id);
+    }
   }
 }

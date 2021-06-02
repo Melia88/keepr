@@ -8,11 +8,14 @@ namespace keeprserver.server.Services
   public class KeepsService
   {
     private readonly KeepsRepository _repo;
+    private readonly VaultsRepository _vrepo;
 
-    public KeepsService(KeepsRepository repo)
+    public KeepsService(KeepsRepository repo, VaultsRepository vrepo)
     {
       _repo = repo;
+      _vrepo = vrepo;
     }
+
 
     // GetProfilesKeeps getting the keeps by the profiles ID
     // This is coming from profiles controller
@@ -28,7 +31,20 @@ namespace keeprserver.server.Services
     // ----------------------------------------------------********************
     public List<VaultKeepsViewModel> GetKeepsByVaultId(int vaultId, string userId)
     {
-      return _repo.GetKeepsByVaultId(vaultId);
+      // I need to get the vault thats holding the keeps
+      var vault = _vrepo.GetVaultById(vaultId);
+      // then I need to check if its private or not
+      if (vault.CreatorId == userId | vault.IsPrivate == false)
+      {
+        return _repo.GetKeepsByVaultId(vaultId);
+        // not private or it is the creator return the vaultkeep
+
+      }
+      else
+      {
+        throw new Exception("You are NOT the creator");
+      }
+      // if its private throw an error
     }
 
     // GetAll

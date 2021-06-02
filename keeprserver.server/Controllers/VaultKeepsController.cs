@@ -39,12 +39,21 @@ namespace keeprserver.server.Controllers
       }
     }
 
-    // /TODO internal VaultKeeps GetVaultKeeps
-    // [HttpGet]
-    // public async Task<ActionResult<List<VaultKeep>> GetVaultKeepById()
-    // {
+    // / VaultKeeps GetVaultKeepById
+    [HttpGet("{id")]
+    public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepById(int id)
+    {
+      try
+      {
+        var vk = _vkService.GetVaultKeepById(id);
+        return Ok(vk);
+      }
+      catch (System.Exception)
+      {
 
-    // }
+        throw;
+      }
+    }
 
     //// ADDED !!!!!!!!
     // Delete /api/vaultkeeps/{{vaultKeepId}
