@@ -40,18 +40,26 @@ namespace keeprserver.server.Controllers
     }
 
     // / VaultKeeps GetVaultKeepById
-    [HttpGet("{id")]
-    public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepById(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<List<VaultKeepsViewModel>>> GetVaultKeepById(int id)
     {
       try
       {
-        var vk = _vkService.GetVaultKeepById(id);
-        return Ok(vk);
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        if (userInfo == null)
+        {
+          string userId = "Private Vault, Only Creator Has Access!";
+          return Ok(_vkService.GetVaultKeepById(id, userId));
+        }
+        else
+        {
+          string userId = userInfo.Id;
+          return Ok(_vkService.GetVaultKeepById(id, userId));
+        }
       }
-      catch (System.Exception)
+      catch (System.Exception e)
       {
-
-        throw;
+        return BadRequest(e.Message);
       }
     }
 

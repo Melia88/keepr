@@ -100,9 +100,9 @@ namespace keeprserver.server.Repositories
                 vk.id AS VaultKeepsId
                 FROM vault_keeps vk
                 JOIN keeps k ON k.id = vk.keepsId
-                JOIN vault v ON v.id = vk.vaultId
+                JOIN vaults v ON v.id = vk.vaultId
                 JOIN profiles p ON k.id = p.id
-                WHERE id = @id ";
+                WHERE vk.id = @id ";
       return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
 
     }

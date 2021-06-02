@@ -55,7 +55,7 @@ namespace keeprserver.server.Repositories
       p.*
       FROM vault_keeps vk
       JOIN keeps k ON k.id = vk.keepsId
-      JOIN profiles p ON p.id = k.creatorId
+      JOIN profiles p ON p.id = vk.creatorId
       WHERE vk.id = @id;
       ";
       return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (vk, p) =>

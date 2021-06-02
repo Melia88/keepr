@@ -55,15 +55,21 @@ namespace keeprserver.server.Services
     // ----------------------------------------------------------------------**********************
 
     // GetVaultKeepById
-    public VaultKeepsViewModel GetVaultKeepById(int id)
+    public VaultKeepsViewModel GetVaultKeepById(int id, string userId)
     {
       VaultKeepsViewModel vk = _repo.GetVaultKeepById(id);
       if (vk == null)
       {
         throw new Exception("Invalid ID");
       }
-
-      return _repo.GetVaultKeepById(id);
+      else if (vk.CreatorId == userId | vk.IsPrivate == false)
+      {
+        return vk;
+      }
+      else
+      {
+        throw new Exception("Vault keep is private");
+      }
     }
   }
 }
