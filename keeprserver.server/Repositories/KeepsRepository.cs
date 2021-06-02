@@ -22,7 +22,7 @@ namespace keeprserver.server.Repositories
       string sql = @"
       SELECT
         k.*,
-        k.id as keepsId,
+        k.id as keepId,
         p.*
       FROM
         keeps k
@@ -84,7 +84,7 @@ namespace keeprserver.server.Repositories
     //             k.*,
     //             vk.id AS VaultKeepsId
     //             FROM vault_keeps vk
-    //             INNER JOIN keeps k ON k.id = vk.keepsId
+    //             INNER JOIN keeps k ON k.id = vk.keepId
     //             WHERE vaultId = @VaultId AND isPrivate = 0";
     //   return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
 
@@ -92,18 +92,23 @@ namespace keeprserver.server.Repositories
     internal List<VaultKeepsViewModel> GetKeepsByVaultId(int id)
     {
       string sql = @"
-                SELECT 
-                k.*,
-                v.*,
-                p.*,
-                vk.vaultId as vaultId,
-                vk.id AS VaultKeepsId
-                FROM vault_keeps vk
-                JOIN keeps k ON k.id = vk.keepsId
-                JOIN vaults v ON v.id = vk.vaultId
-                JOIN profiles p ON k.id = p.id
-                WHERE vk.id = @id ";
-      return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
+              SELECT
+  k.*,
+  vk.id AS VaultKeepsId,
+  p.*,
+  vk.*
+FROM
+  vault_keeps vk
+  JOIN keeps k ON k.id = vk.keepId
+  JOIN profiles p ON k.creatorId = p.id
+WHERE
+  vk.vaultId = @id ";
+      // return _db.Query<VaultKeepsViewModel>(sql, new { id }).ToList();
+      return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (k, p) =>
+     {
+       k.Creator = p;
+       return k;
+     }, new { id }, splitOn: "id").ToList();
 
     }
     // AND isPrivate = 0

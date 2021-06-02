@@ -11,9 +11,9 @@ namespace keeprserver.server.Models
     // [Required]
     public string CreatorId { get; set; }
     // [Required]
-    public string VaultId { get; set; }
+    public int VaultId { get; set; }
     // [Required]
-    public string KeepsId { get; set; }
+    public int KeepId { get; set; }
 
     public Profile Creator { get; set; }
   }
@@ -21,9 +21,9 @@ namespace keeprserver.server.Models
   {
     // [Required]
 
-    public string VaultId { get; set; }
+    public int VaultId { get; set; }
     // [Required]
-    public string KeepsId { get; set; }
+    public int KeepsId { get; set; }
     // [Required]
     public int VaultKeepsId { get; set; }
 

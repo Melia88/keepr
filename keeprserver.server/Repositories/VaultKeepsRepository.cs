@@ -27,12 +27,12 @@ namespace keeprserver.server.Repositories
         v.name as vaultName,
         vk.id as vaultKeepsId,
         vk.vaultId as vaultId,
-        vk.keepsId as keepsId
+        vk.keepId as keepsId
         vk.creatorId as creatorId
       FROM
         vault_keeps vk
       JOIN vaults v ON v.id = vk.vaultId
-      JOIN keeps k ON k.id = vk.keepsId
+      JOIN keeps k ON k.id = vk.keepId
       JOIN profiles p ON p.id = k.creatorId
       WHERE
         vk.vaultId = @id;";
@@ -50,11 +50,11 @@ namespace keeprserver.server.Repositories
       SELECT 
       vk.id as vaultKeepsId,
       vk.vaultId as vaultId,
-      vk.keepsId as keepsId,
+      vk.keepId as keepsId,
       k.*,
       p.*
       FROM vault_keeps vk
-      JOIN keeps k ON k.id = vk.keepsId
+      JOIN keeps k ON k.id = vk.keepId
       JOIN profiles p ON p.id = vk.creatorId
       WHERE vk.id = @id;
       ";
@@ -77,12 +77,12 @@ namespace keeprserver.server.Repositories
       UPDATE keeps 
       SET 
       keeps = keeps + 1 
-      WHERE id = @keepsId; 
+      WHERE id = @keepId; 
       INSERT INTO 
             vault_keeps
-            (creatorId, vaultId, keepsId)
+            (creatorId, vaultId, keepId)
             VALUES 
-            (@CreatorId, @VaultId, @KeepsId);
+            (@CreatorId, @VaultId, @KeepId);
             SELECT LAST_INSERT_ID();
             ";
 

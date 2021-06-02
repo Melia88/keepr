@@ -143,9 +143,20 @@ namespace keeprserver.server.Controllers
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        var userId = userInfo.Id;
-        var keeps = _kService.GetKeepsByVaultId(id, userId);
-        return Ok(keeps);
+        // string userId = userInfo.Id;
+        List<VaultKeepsViewModel> keeps = _kService.GetKeepsByVaultId(id, userInfo.Id);
+
+
+        if (userInfo == null)
+        {
+          // string userId = "Private Vault, Only Creator Has Access!";
+          return Ok(_kService.GetKeepsByVaultId(id, userInfo.Id));
+        }
+        else
+        {
+          string userId = userInfo.Id;
+          return Ok(_kService.GetKeepsByVaultId(id, userInfo.Id));
+        }
       }
       catch (System.Exception e)
       {
