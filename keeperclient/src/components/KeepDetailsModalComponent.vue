@@ -71,14 +71,17 @@
                         <!-- </div> -->
                       </div>
                       <!-- ----------------------- this ends the move task dropdown -->
-                      <!-- REVIEW THESE 2 THINGS ARE CAUSING THE ENTIRE APP TO CRASH -->
                       <i class="far fa-trash-alt text-secondary mx-2 pl-2 action" title="Delete Keep" @click="deleteKeep(state.activeKeep)" v-if="state.activeKeep.creator && state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
 
                       <router-link v-if="state.activeKeep.creator" :to="{name: 'ProfileDetailsPage', params: {id: state.activeKeep.creator.id}}" data-dismiss="modal">
                         {{ state.activeKeep.creator.name }}
                         <img class="creator-pic rounded-circle small-img action" title="Go to Keep Creator's Profile" :src="state.activeKeep.creator.picture" alt="Creator Photo">
                       </router-link>
-                      <!-- ENDS HERE -->
+                    </div>
+                    <div class="card-footer footer-light text-muted" v-if="route.name == 'VaultKeepPage'">
+                      <button type="button" class="btn btn-primary" @click.prevent="">
+                        Delete Keep
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -100,6 +103,7 @@ import { keepsService } from '../services/KeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'KeepDetailsModalComponent',
@@ -110,6 +114,7 @@ export default {
   //   }
   // },
   setup(props) {
+    const route = useRoute()
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
       user: computed(() => AppState.user),
@@ -120,6 +125,7 @@ export default {
     })
     return {
       state,
+      route,
       // activeKeepDetails() {
       //   AppState.activeKeep = props.keep
       // }

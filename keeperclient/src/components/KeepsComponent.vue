@@ -1,5 +1,5 @@
 <template>
-  <div class="keeps-component" v-if="state.activeKeep">
+  <div class="keeps-component">
     <div class="card text-white shadow">
       <img :src="keep.img"
            class="card-img"
@@ -29,6 +29,7 @@
 import { computed, reactive } from 'vue'
 
 import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
 export default {
   name: 'KeepsComponent',
   props: {
@@ -39,12 +40,17 @@ export default {
   },
   setup(props) {
     const state = reactive({
-      activeKeep: computed(() => AppState.activeKeep)
+      activeKeep: computed(() => AppState.activeKeep),
+      activeVault: computed(() => AppState.activeVault),
+      vaultkeeps: computed(() => AppState.vaultKeeps),
+      keeps: computed(() => AppState.profileKeeps),
+      vaults: computed(() => AppState.profileVaults)
     })
     return {
       state,
       activeKeepDetails() {
         AppState.activeKeep = props.keep
+        keepsService.getById(AppState.activeKeep.id)
       }
     }
   },

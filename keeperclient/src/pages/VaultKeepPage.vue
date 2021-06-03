@@ -15,7 +15,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <KeepsComponent v-for="keep in state.vaultKeeps" :key="keep.id" :keep="keep" />
+        <KeepsComponent v-for="keep in state.vaultkeeps" :key="keep.id" :keep="keep" />
       </div>
     </div>
   </div>
@@ -29,6 +29,7 @@ import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
 import { logger } from '../utils/Logger'
+import KeepsComponent from '../components/KeepsComponent.vue'
 
 export default {
   name: 'VaultKeepPage',
@@ -67,7 +68,7 @@ export default {
       }
     }
   },
-  components: {}
+  components: { KeepsComponent }
 }
 </script>
 

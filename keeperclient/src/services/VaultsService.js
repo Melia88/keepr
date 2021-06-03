@@ -11,8 +11,6 @@ class VaultsService {
     // console.log(body)
   }
 
-  // GetAllVaults
-  // ??
   // GETBYID
   async getVaultById(id) {
     const res = await api.get(`api/vaults/${id}`)
@@ -29,7 +27,6 @@ class VaultsService {
   async GetVaultsKeeps(id) {
     const res = await api.get(`api/vaults/${id}/keeps`)
     AppState.vaultKeeps = res.data
-    console.log(res.data)
   }
 }
 export const vaultsService = new VaultsService()
