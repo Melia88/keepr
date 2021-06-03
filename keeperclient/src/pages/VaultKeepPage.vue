@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col">
         <div class="card-columns responsive">
-          <KeepsComponent v-for="keep in state.vaultkeeps" :key="keep.id" :keep="keep" />
+          <KeepsComponent v-for="keep in state.vaultkeeps" :key="keep.id" :keep="keep" :vault-keep="vaultKeep" />
         </div>
       </div>
     </div>

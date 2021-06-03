@@ -45,6 +45,12 @@ namespace keeprserver.server.Services
       return vaults.ToList().FindAll(v => v.IsPrivate == false);
 
     }
+    public List<Vault> GetVaultsByUserId(string id)
+    {
+      List<Vault> vaults = _repo.GetVaultsByProfileId(id);
+      return vaults.ToList();
+
+    }
     // GetAll
     internal List<Vault> GetAll()
     {

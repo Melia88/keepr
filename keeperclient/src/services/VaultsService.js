@@ -6,7 +6,6 @@ class VaultsService {
   async createVault(body) {
     const res = await api.post('api/vaults', body)
     // this.getVaultById(body.id)
-    body.vaults += 1
     AppState.profileVaults.push(res.data)
     // console.log(body)
   }

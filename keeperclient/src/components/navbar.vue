@@ -1,12 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-primary bg-primary text-secondary">
+  <nav class="navbar navbar-expand-lg navbar-primary bg-primary text-secondary navbar-dark">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        />
+        <i class="fab fa-drupal fa-5x"></i>
       </div>
     </router-link>
     <button
@@ -18,7 +14,7 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="navbar-toggler-icon" />
+      <span class="navbar-toggler-icon text-light" />
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
@@ -27,15 +23,15 @@
             Home
           </router-link>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link :to="{ name: 'About' }" class="nav-link">
             About
           </router-link>
-        </li>
+        </li> -->
       </ul>
       <span class="navbar-text">
         <button
-          class="btn btn-outline-primary text-uppercase"
+          class="btn btn-outline-light text-uppercase"
           @click="login"
           v-if="!user.isAuthenticated"
         >
@@ -51,16 +47,16 @@
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded"
+              class="rounded-circle"
             />
-            <span class="mx-3">{{ user.name }}</span>
+            <b class="mx-3 text-white">{{ user.name }}</b>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
-            <router-link :to="{ name: 'Account' }">
+            <router-link :to="{ name: 'ProfileDetailsPage', params:{id: account.id}}">
               <div class="list-group-item list-group-item-action hoverable">
                 Account
               </div>
@@ -91,6 +87,7 @@ export default {
     return {
       state,
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },

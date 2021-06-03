@@ -54,15 +54,20 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <div class="row">
-          <!-- <div class="col-3"> -->
-          <!-- <div class="vaults"> -->
-          <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
-          <!-- </div> -->
-          <!-- </div> -->
-        </div>
+      <!-- <div class="col">
+        <div class="row"> -->
+      <!-- <div class="col-3"> -->
+      <!-- All Vaults -->
+      <div class="col-3 vaults" v-if="state.account.id != $route.params.id">
+        <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
       </div>
+      <!-- Vaults that arent private -->
+      <div class="col-3 vaults  " v-else>
+        <VaultsComponent v-for="vault in state.userVaults" :key="vault.id" :vault="vault" />
+      </div>
+      <!-- </div> -->
+      <!-- </div>
+      </div> -->
     </div>
 
     <!-- KEEPS STARTS -->
@@ -117,6 +122,7 @@ export default {
       activeProfile: computed(() => AppState.activeProfile),
       keeps: computed(() => AppState.profileKeeps),
       vaults: computed(() => AppState.profileVaults),
+      userVaults: computed(() => AppState.userVaults),
       account: computed(() => AppState.account),
       profile: computed(() => AppState.profile),
       user: computed(() => AppState.user)

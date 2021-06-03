@@ -1,5 +1,5 @@
 <template>
-  <div class="col-3 vaults-component my-1" v-if="vault.id">
+  <div class=" vaults-component my-1" v-if="vault.id">
     <div class="card bg-dark text-white">
       <img :src="vault.img" class="card-img w-100" alt="...">
       <div class="card-img-overlay">

@@ -79,7 +79,7 @@
                       </router-link>
                     </div>
                     <div class="card-footer footer-light text-muted" v-if="route.name == 'VaultKeepPage'">
-                      <button type="button" class="btn btn-primary" @click.prevent="">
+                      <button type="button" class="btn btn-primary" @click.prevent="deleteVaultKeep(props.vaultKeep.vaultKeepId)">
                         Delete Keep
                       </button>
                     </div>
@@ -99,7 +99,7 @@
 <script>
 import { computed, reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
-// import { vaultKeepsService } from '../services/VaultKeepsService'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
@@ -107,21 +107,21 @@ import { useRoute } from 'vue-router'
 
 export default {
   name: 'KeepDetailsModalComponent',
-  // props: {
-  //   keep: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
-  setup(props) {
+  props: {
+    vaultKeep: {
+      type: Object,
+      required: true
+    }
+  },
+  setup() {
     const route = useRoute()
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       activeProfile: computed(() => AppState.activeProfile),
-      vaults: computed(() => AppState.profileVaults)
-
+      vaults: computed(() => AppState.userVaults),
+      vaultKeeps: computed(() => AppState.vaultKeeps)
     })
     return {
       state,
@@ -136,6 +136,19 @@ export default {
             await keepsService.deleteKeep(activeKeep.id)
             Notification.toast('Successfully Deleted Keep', 'success')
           }
+          $('#keepsDetailsModal').modal('hide')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async deleteVaultKeep(vaultKeep) {
+        try {
+          console.log(vaultKeep)
+          if (await Notification.confirmAction()) {
+            await vaultKeepsService.deleteOneKeepFromVault(vaultKeep)
+            Notification.toast('Successfully Deleted Keep', 'success')
+          }
+
           $('#keepsDetailsModal').modal('hide')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
