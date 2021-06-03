@@ -41,7 +41,7 @@
                         {{ state.activeKeep.description }}
                       </p>
                     </div>
-                    <div class="card-footer footer-light text-muted">
+                    <div class="card-footer footer-light text-muted" v-if="route.name != 'VaultKeepPage'">
                       <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                       <!-- This starts the move keep to a vault dropdown -->
                       <div class="dropdown" v-if="state.user.isAuthenticated">

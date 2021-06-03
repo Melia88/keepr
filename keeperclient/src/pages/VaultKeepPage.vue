@@ -15,7 +15,9 @@
     </div>
     <div class="row">
       <div class="col">
-        <KeepsComponent v-for="keep in state.vaultkeeps" :key="keep.id" :keep="keep" />
+        <div class="card-columns responsive">
+          <KeepsComponent v-for="keep in state.vaultkeeps" :key="keep.id" :keep="keep" />
+        </div>
       </div>
     </div>
   </div>
@@ -75,5 +77,8 @@ export default {
 <style lang="scss" scoped>
 .action{
   cursor: pointer;
+}
+.card-columns{
+  column-count:4;
 }
 </style>
