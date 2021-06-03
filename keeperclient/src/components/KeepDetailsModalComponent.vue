@@ -128,7 +128,7 @@ export default {
         try {
           if (await Notification.confirmAction()) {
             await keepsService.deleteKeep(activeKeep.id)
-            // Notification.toast('Successfully Deleted Note', 'success')
+            Notification.toast('Successfully Deleted Keep', 'success')
           }
           $('#keepsDetailsModal').modal('hide')
         } catch (error) {

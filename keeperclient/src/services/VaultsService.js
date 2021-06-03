@@ -1,6 +1,6 @@
 import { AppState } from '../AppState'
+import router from '../router.js'
 import { api } from './AxiosService'
-import { profileDetailsService } from './ProfileDetailsService'
 
 class VaultsService {
   async createVault(body) {
@@ -22,12 +22,14 @@ class VaultsService {
 
   async deleteVault(id, userId) {
     await api.delete(`api/vaults/${id}`)
-    await profileDetailsService(userId)
+    // await profileDetailsService(userId)
+    router.push({ name: 'ProfileDetailsPage' })
   }
 
   async GetVaultsKeeps(id) {
     const res = await api.get(`api/vaults/${id}/keeps`)
     AppState.vaultKeeps = res.data
+    console.log(res.data)
   }
 }
 export const vaultsService = new VaultsService()

@@ -54,59 +54,59 @@ WHERE
   vk.vaultId = 36;
 -- The profiles table takes the place of accuonts but is the same thing
   /* SELECT
-    k.*,
-    v.name as vaultName,
-    v.description as vaultsDescription,
-    v.creatorId as creatorId,
-    vk.Id as vaultKeepsId,
-    vk.vaultId as vaultId,
-    vk.keepsId as keepsId
-  FROM
-    vault_keeps vk
-    JOIN vaults v ON v.id = vk.vaultId
-    JOIN keeps k ON k.id = vk.keepsId
-  WHERE
-    vk.vaultId = @id;
-  INSERT INTO
-    keeps(name, description)
-  VALUES
-    ("please", "work");
-  SELECT
-    LAST_INSERT_ID();
-  SELECT
-    k.*,
-    p.*
-  FROM
-    keeps k
-    JOIN profiles p ON p.id = k.creatorId;
-  SELECT
-    v.*,
-    p.*
-  From
-    vaults v
-    JOIN profiles p ON p.id = v.creatorId
-  WHERE
-    v.id = 1;
-  INSERT INTO
-    vaults (creatorId, name, description)
-  VALUES
-    (
-      "9b1fabde-0565-432c-aeea-318a95a5fcd7",
-      "id check",
-      "some stuff"
-    );
-  SELECT
-    *
-  FROM
-    vaults
-  WHERE
-    id = 52;
-  SELECT
-    v.*,
-    v.id as vaultId,
-    p.*
-  From
-    vaults v
-    JOIN profiles p ON p.id = v.creatorId
-  WHERE
-    v.id = 52; */
+        k.*,
+        v.name as vaultName,
+        v.description as vaultsDescription,
+        v.creatorId as creatorId,
+        vk.Id as vaultKeepsId,
+        vk.vaultId as vaultId,
+        vk.keepsId as keepsId
+      FROM
+        vault_keeps vk
+        JOIN vaults v ON v.id = vk.vaultId
+        JOIN keeps k ON k.id = vk.keepsId
+      WHERE
+        vk.vaultId = @id;
+      INSERT INTO
+        keeps(name, description)
+      VALUES
+        ("please", "work");
+      SELECT
+        LAST_INSERT_ID();
+      SELECT
+        k.*,
+        p.*
+      FROM
+        keeps k
+        JOIN profiles p ON p.id = k.creatorId;
+      SELECT
+        v.*,
+        p.*
+      From
+        vaults v
+        JOIN profiles p ON p.id = v.creatorId
+      WHERE
+        v.id = 1;
+      INSERT INTO
+        vaults (creatorId, name, description)
+      VALUES
+        (
+          "9b1fabde-0565-432c-aeea-318a95a5fcd7",
+          "id check",
+          "some stuff"
+        );
+      SELECT
+        *
+      FROM
+        vaults
+      WHERE
+        id = 52;
+      SELECT
+        v.*,
+        v.id as vaultId,
+        p.*
+      From
+        vaults v
+        JOIN profiles p ON p.id = v.creatorId
+      WHERE
+        v.id = 52; */

@@ -1,6 +1,23 @@
 <template>
   <div class="vault-keep-kage" v-if="state.activeVault">
-    {{ activeVault.name }}
+    <div class="row">
+      <div class="col-12 m-3">
+        <div>
+          <h1 class="m-3">
+            {{ state.activeVault.name }}
+          </h1>
+          <i class="far fa-trash-alt text-secondary m-2 pl-2 action" title="Delete Keep" @click="deleteVault(state.activeVault)" v-if="state.activeVault.creator && state.activeVault.creator.id == state.account.id" aria-hidden="true"></i>
+          <p class="m-3">
+            {{ state.activeVault.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <KeepsComponent v-for="keep in state.vaultKeeps" :key="keep.id" :keep="keep" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,6 +26,9 @@ import { vaultsService } from '../services/VaultsService'
 import { computed, watchEffect, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
+import Notification from '../utils/Notification'
+import $ from 'jquery'
+import { logger } from '../utils/Logger'
 
 export default {
   name: 'VaultKeepPage',
@@ -19,18 +39,9 @@ export default {
       account: computed(() => AppState.account),
       profile: computed(() => AppState.profile),
       user: computed(() => AppState.user),
-      activeVault: computed(() => AppState.activeVault)
+      activeVault: computed(() => AppState.activeVault),
+      vaultkeeps: computed(() => AppState.vaultKeeps)
     })
-    // onMounted(async() => {
-    //   try {
-    //     await profileService.getAll()
-    //   } catch (error) {
-    //     logger.log(error)
-    //   }
-    // })
-    // onMounted(async() => {
-    //   })
-    // If I change the onMounted in this specific instance to watchEffect
     watchEffect(async() => {
       try {
         await vaultsService.getVaultById(route.params.id)
@@ -41,7 +52,19 @@ export default {
     })
     return {
       route,
-      state
+      state,
+      async deleteVault(activeVault) {
+        try {
+          if (await Notification.confirmAction()) {
+            await vaultsService.deleteVault(activeVault.id)
+            Notification.toast('Successfully Deleted Vault', 'success')
+          }
+          $('#keepsDetailsModal').modal('hide')
+        } catch (error) {
+          logger.error(error)
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
@@ -49,5 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.action{
+  cursor: pointer;
+}
 </style>
