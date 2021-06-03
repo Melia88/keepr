@@ -1,5 +1,6 @@
 <template>
-  <div class="keep-details-modal-component">
+  <div class="keep-details-modal-component" v-if="state.account">
+    <!-- v-if="state.account" -->
     <div class="modal"
          id="keepsDetailsModal"
          tabindex="-1"
@@ -12,7 +13,7 @@
           <div class="div modal-body p-1">
             <!-- ------------------------------------------------------------------------------------ -->
             <div class="div container-fluid">
-              <div class="row" v-if="state.activeKeep">
+              <div class="row" v-if="state.activeKeep.id">
                 <div class="col-12 col-md-6 m-0 p-0">
                   <img :src="state.activeKeep.img" alt="" class="w-100">
                 </div>
@@ -43,7 +44,7 @@
                     <div class="card-footer footer-light text-muted">
                       <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                       <!-- This starts the move keep to a vault dropdown -->
-                      <div class="dropdown">
+                      <div class="dropdown" v-if="state.user.isAuthenticated">
                         <button class="btn btn-primary dropdown-toggle"
                                 type="button"
                                 title="Add Keep to a Vault"
@@ -65,17 +66,19 @@
                              :key="vault.id"
                              @click="moveToVault" -->
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                          <VaultNameComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" :keep="keep" />
+                          <VaultNameComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" :keep="state.activeKeep" />
                         </div>
                         <!-- </div> -->
                       </div>
-                      <!------------------------- this ends the move task dropdown -->
-                      <i class="far fa-trash-alt text-secondary mx-2 pl-2 action" title="Delete Keep" @click="deleteKeep(state.activeKeep)" v-if="state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
+                      <!-- ----------------------- this ends the move task dropdown -->
+                      <!-- REVIEW THESE 2 THINGS ARE CAUSING THE ENTIRE APP TO CRASH -->
+                      <i class="far fa-trash-alt text-secondary mx-2 pl-2 action" title="Delete Keep" @click="deleteKeep(state.activeKeep)" v-if="state.activeKeep.creator && state.activeKeep.creator.id == state.account.id" aria-hidden="true"></i>
 
-                      <router-link :to="{name: 'ProfileDetailsPage', params: {id: state.activeKeep.creator.id}}" data-dismiss="modal">
+                      <router-link v-if="state.activeKeep.creator" :to="{name: 'ProfileDetailsPage', params: {id: state.activeKeep.creator.id}}" data-dismiss="modal">
                         {{ state.activeKeep.creator.name }}
                         <img class="creator-pic rounded-circle small-img action" title="Go to Keep Creator's Profile" :src="state.activeKeep.creator.picture" alt="Creator Photo">
                       </router-link>
+                      <!-- ENDS HERE -->
                     </div>
                   </div>
                 </div>
@@ -100,12 +103,12 @@ import $ from 'jquery'
 
 export default {
   name: 'KeepDetailsModalComponent',
-  props: {
-    keep: {
-      type: Object,
-      required: true
-    }
-  },
+  // props: {
+  //   keep: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
   setup(props) {
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),

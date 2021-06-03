@@ -1,5 +1,5 @@
 <template>
-  <div class="keeps-component">
+  <div class="keeps-component" v-if="state.activeKeep">
     <div class="card text-white shadow">
       <img :src="keep.img"
            class="card-img"
@@ -13,7 +13,6 @@
                 data-target="#keepsDetailsModal"
                 @click="activeKeepDetails()"
         >
-          <!-- v-if="state.user.isAuthenticated" -->
           <h5 class="card-title mb-2 keep-name">
             {{ keep.name }}
           </h5>

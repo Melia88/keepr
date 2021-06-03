@@ -5,10 +5,10 @@ import { profileDetailsService } from './ProfileDetailsService'
 class VaultsService {
   async createVault(body) {
     const res = await api.post('api/vaults', body)
-    AppState.profileVaults.push(res.data)
     // this.getVaultById(body.id)
-    // body.vaults += 1
-    console.log(body)
+    body.vaults += 1
+    AppState.profileVaults.push(res.data)
+    // console.log(body)
   }
 
   // GetAllVaults
@@ -16,8 +16,8 @@ class VaultsService {
   // GETBYID
   async getVaultById(id) {
     const res = await api.get(`api/vaults/${id}`)
-    AppState.vaults = res.data
-    // console.log(res.data)
+    AppState.activeVault = res.data
+    console.log(res.data)
   }
 
   async deleteVault(id, userId) {

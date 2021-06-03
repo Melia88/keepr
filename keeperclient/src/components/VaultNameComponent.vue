@@ -1,5 +1,5 @@
 <template>
-  <div class="vault-name-component">
+  <div class="vault-name-component" v-if="state.vaults && state.keep">
     <a class="dropdown-item action"
        href="#"
        title="Add to this Vault!"

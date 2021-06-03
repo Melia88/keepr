@@ -1,5 +1,6 @@
 <template>
   <div class="modal"
+       v-if="state.newKeep"
        id="new-keeps-form"
        tabindex="-1"
        role="dialog"
