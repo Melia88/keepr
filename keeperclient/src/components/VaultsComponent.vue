@@ -3,9 +3,9 @@
     <div class="card bg-dark text-white">
       <img src="https://images.unsplash.com/photo-1561065749-2a263ce7b379?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80" class="card-img w-100" alt="...">
       <div class="card-img-overlay">
-        <router-link :to="{name: 'VaultKeepPage', params: {id: vault.id}}">
+        <router-link :to="{name: 'VaultKeepPage', params: {id: vault.id}}" class="goToVaultKeepLink">
           <h5 class="card-title">
-            {{ props.vault.name }}
+            {{ vault.name }}
           </h5>
         </router-link>
         <!-- <p class="card-text">
@@ -36,5 +36,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.goToVaultKeepLink{
+  color: white;
+    text-shadow: 1.5px 1.5px 1.5px #000;
+}
 </style>

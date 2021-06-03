@@ -38,12 +38,12 @@ export default {
       state,
       async moveToVault() {
         try {
-          console.log(props.vault.id)
+          // console.log(props.vault.id)
           const newVaultKeep = {
             keepId: state.keep.id,
             vaultId: props.vault.id
           }
-          console.log(newVaultKeep)
+          // console.log(newVaultKeep)
           await vaultKeepsService.moveToVault(newVaultKeep)
           Notification.toast('Successfully Added Keep to Vault!', 'success')
         } catch (error) {

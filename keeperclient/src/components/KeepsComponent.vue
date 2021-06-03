@@ -14,7 +14,7 @@
                 @click="activeKeepDetails()"
         >
           <!-- v-if="state.user.isAuthenticated" -->
-          <h5 class="card-title mb-2">
+          <h5 class="card-title mb-2 keep-name">
             {{ keep.name }}
           </h5>
         </button>
@@ -57,5 +57,9 @@ export default {
 .creator-pic{
   max-height: 2rem;
   max-width: 2rem;
+}
+.keep-name{
+  color: white;
+    text-shadow: 1.5px 1.5px 1.5px #000;
 }
 </style>

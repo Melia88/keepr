@@ -6,7 +6,10 @@ class VaultKeepsService {
     // console.log(res.data)
   }
 
-  // DeleteVaultKeeps
+  // async deleteOneKeepFromVault(vkId, vaultId){
+  // const res = await api.delete(`api/vaultkeeps/${vkId}`/)
+  // vaultsService.GetVaultsKeeps(vaultId)
+  // }
 }
 
 export const vaultKeepsService = new VaultKeepsService()
