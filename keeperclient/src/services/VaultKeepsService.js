@@ -5,6 +5,8 @@ class VaultKeepsService {
     await api.post('api/vaultkeeps', newVaultKeep)
     // console.log(res.data)
   }
+
+  // DeleteVaultKeeps
 }
 
 export const vaultKeepsService = new VaultKeepsService()
