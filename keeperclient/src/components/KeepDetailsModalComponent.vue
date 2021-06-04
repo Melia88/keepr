@@ -78,9 +78,9 @@
                         <img class="creator-pic rounded-circle small-img action" title="Go to Keep Creator's Profile" :src="state.activeKeep.creator.picture" alt="Creator Photo">
                       </router-link>
                     </div>
-                    <div class="card-footer footer-light text-muted" v-if="route.name == 'VaultKeepPage'">
+                    <div class="card-footer footer-light text-muted" v-if="route.name == 'VaultKeepPage' && state.activeVault.creatorId == state.account.id">
                       <button type="button" class="btn btn-primary" @click.prevent="deleteVaultKeep()">
-                        Delete Keep
+                        Remove from Vault
                       </button>
                       <!-- props.vaultKeep.vaultKeepId -->
                     </div>
@@ -100,7 +100,7 @@
 <script>
 import { computed, reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
-// import { vaultKeepsService } from '../services/VaultKeepsService'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
@@ -118,6 +118,7 @@ export default {
     const route = useRoute()
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
+      activeVault: computed(() => AppState.activeVault),
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       activeProfile: computed(() => AppState.activeProfile),
@@ -142,7 +143,7 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async deleteVaultKeep(activeKeep) {
+      async deleteVaultKeep() {
         try {
           // AppState.vaultKeep = props.vaultKeep
           // const activeVK = await keepsService.getById(activeKeep.id)
@@ -150,7 +151,7 @@ export default {
           // console.log(vaultKeep)
           // const found = vaultKeep.find(vk => vk === vaultKeep.id)
           if (await Notification.confirmAction()) {
-            await keepsService.deleteKeep(state.activeKeep.id, state.vaults.id)
+            await vaultKeepsService.deleteOneKeepFromVault(state.activeKeep.vaultKeepId, state.activeVault.id)
             // await vaultKeepsService.deleteOneKeepFromVault(activeVK)
             Notification.toast('Successfully Deleted Keep', 'success')
           }

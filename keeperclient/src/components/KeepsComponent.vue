@@ -53,6 +53,10 @@ export default {
       type: Object,
       required: true
     }
+    // vaultKeep: {
+    //   type: Object,
+    //   required: true
+    // }
   },
   setup(props) {
     const state = reactive({
