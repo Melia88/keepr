@@ -13,7 +13,7 @@
         </p>
 
         <p class="vaults mb-4">
-          Vaults: <span></span> {{ state.vaults.length }}
+          Vaults: <span></span> {{ state.userVaults.length }}
         </p>
         <p class="vaults mb-4">
           Keeps: <span></span> {{ state.keeps.length }}
@@ -54,15 +54,16 @@
       </div>
     </div>
     <div class="row">
+      <!-- <div class="col"></div> -->
       <!-- <div class="col">
         <div class="row"> -->
       <!-- <div class="col-3"> -->
       <!-- All Vaults -->
-      <div class="col-3 vaults" v-if="state.account.id != $route.params.id">
+      <div class="col-12 vaults float-container" v-if="state.account.id != $route.params.id">
         <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
       </div>
       <!-- Vaults that arent private -->
-      <div class="col-3 vaults  " v-else>
+      <div class="col-12 vaults float-container " v-else>
         <VaultsComponent v-for="vault in state.userVaults" :key="vault.id" :vault="vault" />
       </div>
       <!-- </div> -->
@@ -183,5 +184,9 @@ export default {
 }
 .card-columns{
   column-count:4;
+}
+.float-container {
+    // border: 3px solid #fff;
+    padding: 1.5rem;
 }
 </style>

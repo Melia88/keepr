@@ -100,7 +100,7 @@
 <script>
 import { computed, reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
-import { vaultKeepsService } from '../services/VaultKeepsService'
+// import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
@@ -142,14 +142,16 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async deleteVaultKeep() {
+      async deleteVaultKeep(activeKeep) {
         try {
-          AppState.vaultKeep = props.vaultKeep
+          // AppState.vaultKeep = props.vaultKeep
+          // const activeVK = await keepsService.getById(activeKeep.id)
 
           // console.log(vaultKeep)
           // const found = vaultKeep.find(vk => vk === vaultKeep.id)
           if (await Notification.confirmAction()) {
-            await vaultKeepsService.deleteOneKeepFromVault(AppState.vaultKeep.id)
+            await keepsService.deleteKeep(state.activeKeep.id, state.vaults.id)
+            // await vaultKeepsService.deleteOneKeepFromVault(activeVK)
             Notification.toast('Successfully Deleted Keep', 'success')
           }
 
