@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-primary bg-primary text-secondary navbar-dark">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <i class="fab fa-drupal fa-5x"></i>
+        <i class="fab fa-drupal fa-5x" title="Go To HomePage"></i>
       </div>
     </router-link>
     <button

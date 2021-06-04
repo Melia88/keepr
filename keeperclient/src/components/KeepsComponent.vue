@@ -18,7 +18,7 @@
           </h5>
         </button>
         <router-link :to="{name: 'ProfileDetailsPage', params: {id: keep.creator.id}}">
-          <img class="creator-pic rounded-circle small-img" :src="keep.creator.picture" alt="Creator Photo">
+          <img class="creator-pic rounded-circle small-img action" title="Go To Keep Creator's Profile" :src="keep.creator.picture" alt="Creator Photo">
         </router-link>
       </div>
     </div>
@@ -66,5 +66,8 @@ export default {
 .keep-name{
   color: white;
     text-shadow: 1.5px 1.5px 1.5px #000;
+}
+.action{
+  cursor: pointer;
 }
 </style>
