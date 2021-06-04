@@ -79,9 +79,10 @@
                       </router-link>
                     </div>
                     <div class="card-footer footer-light text-muted" v-if="route.name == 'VaultKeepPage'">
-                      <button type="button" class="btn btn-primary" @click.prevent="deleteVaultKeep(props.vaultKeep.vaultKeepId)">
+                      <button type="button" class="btn btn-primary" @click.prevent="deleteVaultKeep()">
                         Delete Keep
                       </button>
+                      <!-- props.vaultKeep.vaultKeepId -->
                     </div>
                   </div>
                 </div>
@@ -113,7 +114,7 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const route = useRoute()
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
@@ -141,11 +142,14 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async deleteVaultKeep(vaultKeep) {
+      async deleteVaultKeep() {
         try {
-          console.log(vaultKeep)
+          AppState.vaultKeep = props.vaultKeep
+
+          // console.log(vaultKeep)
+          // const found = vaultKeep.find(vk => vk === vaultKeep.id)
           if (await Notification.confirmAction()) {
-            await vaultKeepsService.deleteOneKeepFromVault(vaultKeep)
+            await vaultKeepsService.deleteOneKeepFromVault(AppState.vaultKeep.id)
             Notification.toast('Successfully Deleted Keep', 'success')
           }
 
