@@ -1,4 +1,5 @@
 import { vaultsService } from '../services/VaultsService'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class VaultKeepsService {
@@ -11,7 +12,7 @@ class VaultKeepsService {
     // await keepsService.getById(vaultId)
     const res = await api.delete(`api/vaultkeeps/${vkId}`)
     vaultsService.GetVaultsKeeps(vaultId)
-    console.log(res.data)
+    logger.log(res.data)
   }
 }
 
