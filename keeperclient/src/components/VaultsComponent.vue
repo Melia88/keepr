@@ -1,6 +1,6 @@
 <template>
-  <div class=" row float-child vaults-component my-1" v-if="vault.id">
-    <div class="col-3 card bg-dark text-white">
+  <div class=" col-2 float-child vaults-component my-1" v-if="vault.id">
+    <div class="m-1 card bg-dark text-white">
       <img :src="vault.img" class="card-img w-100" alt="...">
       <div class="card-img-overlay">
         <router-link :to="{name: 'VaultKeepPage', params: {id: vault.id}}" class="goToVaultKeepLink">
@@ -10,7 +10,7 @@
             {{ vault.name }}
           </h5>
         </router-link>
-        <!-- <p class="card-text">
+      <!-- <p class="card-text">
           This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
         </p>
         <p class="card-text">
@@ -52,9 +52,9 @@ export default {
   color: white;
     text-shadow: 1.5px 1.5px 1.5px #000;
 }
-.float-child {
-    width: 50%;
-    float: left;
-    // padding: 20px;
-}
+// .float-child {
+//     width: 50%;
+//     float: left;
+//     // padding: 20px;
+// }
 </style>

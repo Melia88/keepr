@@ -75,6 +75,7 @@ import { keepsService } from '../services/KeepsService'
 import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
+import { profileDetailsService } from '../services/ProfileDetailsService'
 export default {
   name: 'CreateKeepModal',
   setup() {
@@ -82,7 +83,8 @@ export default {
       newKeep: {},
       keeps: computed(() => AppState.keeps),
       user: computed(() => AppState.user),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      activeProfile: computed(() => AppState.activeProfile)
     })
     return {
       state,
@@ -91,6 +93,7 @@ export default {
           await keepsService.createKeep(state.newKeep)
           state.newKeep = {}
           $('#new-keeps-form').modal('hide')
+          await profileDetailsService.getProfileVaults(state.activeProfile.id)
           Notification.toast('Successfully Created Keep', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

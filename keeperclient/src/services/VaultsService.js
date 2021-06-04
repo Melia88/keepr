@@ -4,9 +4,10 @@ import { api } from './AxiosService'
 
 class VaultsService {
   async createVault(body) {
-    const res = await api.post('api/vaults', body)
+    await api.post('api/vaults', body)
+    // const res =
     // this.getVaultById(body.id)
-    AppState.profileVaults.push(res.data)
+    // AppState.profileVaults.push(res.data)
     // console.log(body)
   }
 

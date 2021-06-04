@@ -47,6 +47,7 @@
                   class="btn btn-outline-transparent"
                   data-toggle="modal"
                   data-target="#new-vault-form"
+                  v-if="state.activeProfile.id == state.account.id"
           >
             <i class="fas fa-plus text-success" aria-hidden="true" v-if="state.activeProfile.id == state.account.id"></i>
           </button>
@@ -54,18 +55,19 @@
       </div>
     </div>
     <div class="row">
-      <!-- <div class="col"></div> -->
+      <div class="col">
+        <div class="row vaults float-container" v-if="state.account.id != $route.params.id">
+          <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
+        </div>
+        <!-- Vaults that arent private -->
+        <div class="row vaults float-container" v-else>
+          <VaultsComponent v-for="vault in state.userVaults" :key="vault.id" :vault="vault" />
+        </div>
+      </div>
       <!-- <div class="col">
         <div class="row"> -->
       <!-- <div class="col-3"> -->
       <!-- All Vaults -->
-      <div class="col-12 vaults float-container" v-if="state.account.id != $route.params.id">
-        <VaultsComponent v-for="vault in state.vaults" :key="vault.id" :vault="vault" />
-      </div>
-      <!-- Vaults that arent private -->
-      <div class="col-12 vaults float-container " v-else>
-        <VaultsComponent v-for="vault in state.userVaults" :key="vault.id" :vault="vault" />
-      </div>
       <!-- </div> -->
       <!-- </div>
       </div> -->
@@ -91,7 +93,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="row  masonryholder" v-if="state.keeps">
+        <div class="row masonryholder" v-if="state.keeps">
           <div class="col">
             <div class="card-columns">
               <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
@@ -185,8 +187,8 @@ export default {
 .card-columns{
   column-count:4;
 }
-.float-container {
-    // border: 3px solid #fff;
-    padding: 1.5rem;
-}
+// .float-container {
+//     // border: 3px solid #fff;
+//     padding: 1.5rem;
+// }
 </style>

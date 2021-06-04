@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
@@ -40,28 +41,28 @@ namespace keeprserver.server.Controllers
     }
 
     // / VaultKeeps GetVaultKeepById
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<List<VaultKeepsViewModel>>> GetVaultKeepById(int id)
-    // {
-    //   try
-    //   {
-    //     Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-    //     if (userInfo == null)
-    //     {
-    //       string userId = "Private Vault, Only Creator Has Access!";
-    //       return Ok(_vkService.GetVaultKeepById(id, userId));
-    //     }
-    //     else
-    //     {
-    //       string userId = userInfo.Id;
-    //       return Ok(_vkService.GetVaultKeepById(id, userId));
-    //     }
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   }
-    // }
+    [HttpGet("{id}")]
+    public async Task<ActionResult<List<VaultKeepsViewModel>>> GetVaultKeepById(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        if (userInfo == null)
+        {
+          throw new Exception("Private Vault, Only Creator Has Access!");
+          // return Ok(_vkService.GetVaultKeepById(id, userId));
+        }
+        else
+        {
+          string userId = userInfo.Id;
+          return Ok(_vkService.GetVaultKeepById(id, userId));
+        }
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
     //// ADDED !!!!!!!!
     // Delete /api/vaultkeeps/{{vaultKeepId}

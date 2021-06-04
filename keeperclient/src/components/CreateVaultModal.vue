@@ -30,7 +30,7 @@
                        required
                 >
               </div>
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label for="title">Image Url</label>
                 <input type="text"
                        class="form-control"
@@ -38,9 +38,8 @@
                        placeholder="URL..."
                        min="1"
                        v-model="state.newVault.img"
-                       required
                 >
-              </div> -->
+              </div>
             </div>
 
             <div class="form-group p-3">

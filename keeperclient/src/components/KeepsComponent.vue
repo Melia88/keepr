@@ -69,9 +69,9 @@ export default {
     })
     return {
       state,
-      activeKeepDetails() {
+      async activeKeepDetails() {
         AppState.activeKeep = props.keep
-        keepsService.getById(AppState.activeKeep.id)
+        await keepsService.getById(AppState.activeKeep.id)
       }
       // activeVaultKeepDetails() {
       //   AppState.activeVaultKeep = props.vaultKeep
