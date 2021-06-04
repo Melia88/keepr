@@ -21,6 +21,22 @@
           <img class="creator-pic rounded-circle small-img action" title="Go To Keep Creator's Profile" :src="keep.creator.picture" alt="Creator Photo">
         </router-link>
       </div>
+      <!-- <div class="card-img-overlay d-flex align-items-end justify-content-between">
+        <button title="View Details"
+                type="button"
+                class="btn btn-outline-transparent text-light"
+                data-toggle="modal"
+                data-target="#keepsDetailsModal"
+                @click="activeVaultKeepDetails()"
+        >
+          <h5 class="card-title mb-2 keep-name">
+            {{ keep.name }}
+          </h5>
+        </button>
+        <router-link :to="{name: 'ProfileDetailsPage', params: {id: keep.creator.id}}">
+          <img class="creator-pic rounded-circle small-img action" title="Go To Keep Creator's Profile" :src="keep.creator.picture" alt="Creator Photo">
+        </router-link>
+      </div> -->
     </div>
   </div>
 </template>
@@ -44,7 +60,8 @@ export default {
       activeVault: computed(() => AppState.activeVault),
       vaultkeeps: computed(() => AppState.vaultKeeps),
       keeps: computed(() => AppState.profileKeeps),
-      vaults: computed(() => AppState.profileVaults)
+      vaults: computed(() => AppState.profileVaults),
+      activeVaultKeep: computed(() => AppState.activeVaultKeep)
     })
     return {
       state,
@@ -52,6 +69,10 @@ export default {
         AppState.activeKeep = props.keep
         keepsService.getById(AppState.activeKeep.id)
       }
+      // activeVaultKeepDetails() {
+      //   AppState.activeVaultKeep = props.vaultKeep
+      //   keepsService.getById(AppState.activeVaultKeep.id)
+      // }
     }
   },
   components: {}

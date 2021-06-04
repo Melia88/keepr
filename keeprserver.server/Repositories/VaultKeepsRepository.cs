@@ -77,7 +77,7 @@ namespace keeprserver.server.Repositories
       UPDATE keeps 
       SET 
       keeps = keeps + 1 
-      WHERE id = @id; 
+      WHERE id = @KeepId; 
       INSERT INTO 
             vault_keeps
             (creatorId, vaultId, keepId)
