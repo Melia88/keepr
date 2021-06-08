@@ -7,6 +7,7 @@
             <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
           </div>
         </div>
+        <!-- <KeepDetailsModalComponent :keep="keep" /> -->
       </div>
     </div>
   </div>

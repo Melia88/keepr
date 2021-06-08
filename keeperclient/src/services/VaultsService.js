@@ -15,7 +15,7 @@ class VaultsService {
   async getVaultById(id) {
     const res = await api.get(`api/vaults/${id}`)
     AppState.activeVault = res.data
-    console.log(res.data)
+    // console.log(res.data)
   }
 
   async deleteVault(id, userId) {

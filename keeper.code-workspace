@@ -26,7 +26,6 @@
       "**/.nyc_*": true,
       "**/coverage": true,
       "**/node_modules": true,
-      "**/bin": true,
       "**/obj": true
     },
     "javascript.updateImportsOnFileMove.enabled": "always",

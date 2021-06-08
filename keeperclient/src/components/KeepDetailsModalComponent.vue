@@ -79,6 +79,7 @@
                       </router-link>
                     </div>
                     <div class="card-footer footer-light text-muted" v-if="route.name == 'VaultKeepPage' && state.activeVault.creatorId == state.account.id">
+                      <!-- && keep.vaultKeepId -->
                       <button type="button" class="btn btn-primary" @click.prevent="deleteVaultKeep()">
                         Remove from Vault
                       </button>
@@ -109,6 +110,10 @@ import { useRoute } from 'vue-router'
 export default {
   name: 'KeepDetailsModalComponent',
   props: {
+    keep: {
+      type: Object,
+      required: true
+    },
     vaultKeep: {
       type: Object,
       required: true
@@ -151,7 +156,8 @@ export default {
           // console.log(vaultKeep)
           // const found = vaultKeep.find(vk => vk === vaultKeep.id)
           if (await Notification.confirmAction()) {
-            await vaultKeepsService.deleteOneKeepFromVault(state.activeKeep.vaultKeepId, state.activeVault.id)
+            // await vaultKeepsService.deleteOneKeepFromVault(state.activeKeep.vaultKeepId, state.activeVault.id)
+            await vaultKeepsService.deleteOneKeepFromVault(props.keep.vaultKeepId)
             // await vaultKeepsService.deleteOneKeepFromVault(activeVK)
             Notification.toast('Successfully Deleted Keep', 'success')
           }
