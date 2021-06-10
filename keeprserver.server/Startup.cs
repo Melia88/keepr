@@ -82,8 +82,8 @@ namespace keeprserver.server
       }).AddJwtBearer(options =>
       {
         // NOTE this must match the object structure in appsettings.json
-        options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
-        options.Audience = Configuration["Auth0:Audience"];
+        options.Authority = $"https://{Configuration["AUTH0_DOMAIN"]}/";
+        options.Audience = Configuration["AUTH0_AUDIENCE"];
       });
 
     }
@@ -91,7 +91,7 @@ namespace keeprserver.server
     private IDbConnection CreateDbConnection()
     {
       // NOTE this must match the object structure in appsettings.json
-      string connectionString = Configuration["DB:gearhost"];
+      string connectionString = Configuration["CONNECTION_STRING"];
       return new MySqlConnection(connectionString);
     }
     // end
