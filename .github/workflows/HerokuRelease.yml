@@ -52,4 +52,4 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
 
 ### IMPORTANT PART if your file is in your server folder change this, if it is at the top level you will need to change the path on the DOCKERFILE ###
-          dockerfile_directory: ./keeprserver.server
+          dockerfile_directory: ./
