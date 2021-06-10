@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import { computed, watchEffect, reactive } from 'vue'
+import { computed, reactive, onMounted } from 'vue'
 // import { logger } from '../utils/Logger'
 // import { profileService } from '../services/ProfileService'
 import { AppState } from '../AppState'
@@ -140,7 +140,7 @@ export default {
     // onMounted(async() => {
     //   })
     // If I change the onMounted in this specific instance to watchEffect
-    watchEffect(async() => {
+    onMounted(async() => {
       try {
         await profileDetailsService.getActiveProfile(route.params.id)
         await profileDetailsService.getProfileKeeps(route.params.id)

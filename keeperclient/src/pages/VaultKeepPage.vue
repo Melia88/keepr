@@ -25,7 +25,7 @@
 
 <script>
 import { vaultsService } from '../services/VaultsService'
-import { computed, watchEffect, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
@@ -45,7 +45,7 @@ export default {
       activeVault: computed(() => AppState.activeVault),
       vaultkeeps: computed(() => AppState.vaultKeeps)
     })
-    watchEffect(async() => {
+    onMounted(async() => {
       try {
         await vaultsService.getVaultById(route.params.id)
         await vaultsService.GetVaultsKeeps(route.params.id)
