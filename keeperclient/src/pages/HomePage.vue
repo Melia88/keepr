@@ -15,7 +15,7 @@
 
 <script>
 import { AppState } from '../AppState'
-import { computed, reactive, watchEffect } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import Notification from '../utils/Notification'
 import { keepsService } from '../services/KeepsService'
 export default {
@@ -26,7 +26,7 @@ export default {
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps)
     })
-    watchEffect(async() => {
+    onMounted(async() => {
       try {
         await keepsService.getAll()
       } catch (error) {
