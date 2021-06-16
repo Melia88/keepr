@@ -25,7 +25,6 @@
       </div>
     </div>
 
-    <!-- -------------------------------------------------------------------------------------------------------- -->
     <!-- VAULTS START -->
     <div class="row mt-5">
       <div class="col">
@@ -85,15 +84,11 @@
         </div>
       </div>
     </div>
-
-    <!-- -------------------------------------------------------------------------------------------------------- -->
   </div>
 </template>
 
 <script>
 import { computed, reactive, onMounted } from 'vue'
-// import { logger } from '../utils/Logger'
-// import { profileService } from '../services/ProfileService'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
 import { profileDetailsService } from '../services/ProfileDetailsService'
@@ -126,24 +121,7 @@ export default {
     return {
       route,
       state
-      // async createKeep() {
-      //   try {
-      //     await keepsService.createPost(state.newKeep)
-      //     Notification.toast('Successfully Created Keep', 'success')
-      //     state.newKeep = {}
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // },
-      // async createVault() {
-      //   try {
-      //     await vaultsService.createPost(state.newVault)
-      //     Notification.toast('Successfully Created Vault', 'success')
-      //     state.newVault = {}
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
+
     }
   },
   components: {}

@@ -18,14 +18,6 @@
                   <img :src="state.activeKeep.img" alt="" class="w-100">
                 </div>
                 <div class="col-12 col-md-6 p-1">
-                  <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <p> icons </p>
-                  <h1> HEllurrrr</h1>
-
-                  <div> this is some crazy messs rn ksdfhiuhwfdschberghkdsh;kdhbxvjhdfmuvjhxmznbxcljs.,h    dixukhvbcidkhbvyhjdbzxk.hchbiuzskjdhbfuvjgmdfzbyxcjhhvxc </div>
-                  <div> </div> -->
                   <div class="card border-light px-0 m-0">
                     <div class="card-header bg-light">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
