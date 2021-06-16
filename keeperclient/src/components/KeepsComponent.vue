@@ -75,7 +75,7 @@ export default {
       }
       // activeVaultKeepDetails() {
       //   AppState.activeVaultKeep = props.vaultKeep
-      //   keepsService.getById(AppState.activeVaultKeep.id)
+      //   vaultsService.GetVaultsKeeps(AppState.activeVaultKeep.id)
       // }
     }
   },
