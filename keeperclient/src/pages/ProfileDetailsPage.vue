@@ -25,16 +25,6 @@
       </div>
     </div>
 
-    <!-- <div class="col-12">
-      <div class="row  masonryholder">
-        <div class="col">
-          <div class="card-columns">
-            <KeepsComponent v-for="keep in state.keeps" :key="keep.id" :keep="keep" />
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <!-- -------------------------------------------------------------------------------------------------------- -->
     <!-- VAULTS START -->
     <div class="row mt-5">
@@ -64,13 +54,6 @@
           <VaultsComponent v-for="vault in state.userVaults" :key="vault.id" :vault="vault" />
         </div>
       </div>
-      <!-- <div class="col">
-        <div class="row"> -->
-      <!-- <div class="col-3"> -->
-      <!-- All Vaults -->
-      <!-- </div> -->
-      <!-- </div>
-      </div> -->
     </div>
 
     <!-- KEEPS STARTS -->
@@ -130,16 +113,7 @@ export default {
       profile: computed(() => AppState.profile),
       user: computed(() => AppState.user)
     })
-    // onMounted(async() => {
-    //   try {
-    //     await profileService.getAll()
-    //   } catch (error) {
-    //     logger.log(error)
-    //   }
-    // })
-    // onMounted(async() => {
-    //   })
-    // If I change the onMounted in this specific instance to watchEffect
+
     onMounted(async() => {
       try {
         await profileDetailsService.getActiveProfile(route.params.id)
